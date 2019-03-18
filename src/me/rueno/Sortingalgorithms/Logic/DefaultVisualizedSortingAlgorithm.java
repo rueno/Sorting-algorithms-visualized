@@ -13,7 +13,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	
 	public DefaultVisualizedSortingAlgorithm(JLabel[] panels){
 		this.labels = panels;
-		this.defaultBackground = UIManager.getColor("Panel.background");
+		this.defaultBackground = UIManager.getColor("panel.background");
 	}
 	
 	public void setNewLabels(JLabel[] labels){
