@@ -28,7 +28,14 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	
 	@Override
 	public final <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed){
-		if(posX == posY) return;
+		if(posX == posY){
+			JLabel lbl = labels[posX];
+			lbl.setBackground(Color.green);
+			sleepAppropiateAmountOfTimeForCompare(currentSpeed);
+			lbl.setBackground(defaultBackground);
+			sleepAfterStep(currentSpeed);
+			return;
+		}
 		
 		C temp = list[posX];
 		list[posX] = list[posY];
@@ -40,9 +47,6 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		panelX.setBackground(Color.green);
 		panelY.setBackground(Color.green);
 		
-		int x = panelX.getLocation().x;
-		int y = panelY.getLocation().x;
-		
 		//runter schieben
 		for(int currentYDeviation = 0; currentYDeviation < (int) (panelX.getHeight() * 1.5D); currentYDeviation += currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() + currentSpeed);
@@ -51,24 +55,15 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		}
 		
 		//Zum jeweiligen anderen Standpunkt verschieben
-		long loops;
-		int lastAddX, lastAddY;
 		int deviationX, deviationY;
-		if(x > y) {
-			loops = (x - y) / currentSpeed;
-			int lastAdd = (x - y) % currentSpeed;
-			lastAddX = -lastAdd;
-			lastAddY = lastAdd;
-			deviationX = -currentSpeed;
-			deviationY = currentSpeed;
-		}else{
-			loops = (y - x) / currentSpeed;
-			int lastAdd = (x - y) % currentSpeed;
-			lastAddX = lastAdd;
-			lastAddY = -lastAdd;
-			deviationX = currentSpeed;
-			deviationY = -currentSpeed;
-		}
+		
+		int difFromXToY = labels[posX].getX() - labels[posY].getX();
+		int difFromYToX = -difFromXToY;
+		
+		int loops = Math.abs(difFromXToY / currentSpeed);
+		deviationX = difFromYToX / loops;
+		deviationY = difFromXToY / loops;
+		
 		
 		for(int i = 0; i < loops; i++) {
 //			PanelX verschieben
@@ -78,8 +73,8 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
 		}
 		
-		panelX.setLocation((int) (panelX.getX() + lastAddX), panelX.getY());
-		panelY.setLocation((int) (panelY.getX() + lastAddY), panelY.getY());
+		panelX.setLocation((int) (panelX.getX() + difFromYToX % currentSpeed), panelX.getY());
+		panelY.setLocation((int) (panelY.getX() + difFromXToY % currentSpeed), panelY.getY());
 		
 //		while(panelX.getX() != y){
 //			//PanelX verschieben
@@ -89,7 +84,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 //			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
 //		}
 		
-		//Hinauf schieben (Fast äquivalent zu runter schieben, eventuell eine Mehtode anlegen?
+		//Hinauf schieben (Fast ï¿½quivalent zu runter schieben, eventuell eine Mehtode anlegen?
 		for(int currentYDeviation = (int) (panelX.getHeight() * 1.5D); currentYDeviation > 0; currentYDeviation -= currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() - currentSpeed);
 			panelY.setLocation(panelY.getX(), panelY.getY() - currentSpeed);
@@ -125,27 +120,27 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	}
 	
 	private void sleepAppropiateAmountOfTimeForCompare(int speed){
-//		try{
-//			Thread.sleep(500);
-//		}catch(InterruptedException interrupted){
-//			interrupted.printStackTrace();
-//		}
+		try{
+			Thread.sleep(500);
+		}catch(InterruptedException interrupted){
+			interrupted.printStackTrace();
+		}
 	}
 	
 	private void sleepAfterStep(int speed){
-//		try{
-//			Thread.sleep(300);
-//		}catch(InterruptedException interrupted){
-//			interrupted.printStackTrace();
-//		}
+		try{
+			Thread.sleep(300);
+		}catch(InterruptedException interrupted){
+			interrupted.printStackTrace();
+		}
 	}
 	
 	private void sleepAppropiateAmountOfTimeForSwap(int speed){
-//		try{
-//			Thread.sleep(17);
-//		}catch(InterruptedException interrupted){
-//			interrupted.printStackTrace();
-//		}
+		try{
+			Thread.sleep(17);
+		}catch(InterruptedException interrupted){
+			interrupted.printStackTrace();
+		}
 	}
 	
 }

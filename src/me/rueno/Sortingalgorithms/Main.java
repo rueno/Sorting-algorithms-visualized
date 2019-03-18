@@ -7,14 +7,13 @@ import me.rueno.Sortingalgorithms.UI.VisualizedSortingAlgorithm;
 public class Main{
 	
 	public static void main(String[] args){
-		try {
+		try{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}catch(Exception e) {
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		VisualizedSortingAlgorithm ui = new VisualizedSortingAlgorithm();
 		ui.setVisible(true);
 	}
-	
 }

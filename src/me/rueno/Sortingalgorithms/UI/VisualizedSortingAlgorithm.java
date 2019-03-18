@@ -2,6 +2,8 @@ package me.rueno.Sortingalgorithms.UI;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.util.Random;
 
 import javax.swing.SwingConstants;
@@ -9,8 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import me.rueno.Sortingalgorithms.Logic.Algorithms.BubbleSort;
+import me.rueno.Sortingalgorithms.Logic.Algorithms.InsertionSort;
 import me.rueno.Sortingalgorithms.Logic.Algorithms.QuickSort;
+import me.rueno.Sortingalgorithms.Logic.Algorithms.SelectionSort;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class VisualizedSortingAlgorithm extends JFrame{
@@ -97,28 +102,35 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		for(int i = 0; i < labels.length; i++) {
 			labels[i].setOpaque(true);
 			labels[i].setText(list[i] + "");
+			labels[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		}
 		
 		JButton btnStarten = new JButton("Starten");
 		btnStarten.setBounds(605, 533, 89, 23);
 		btnStarten.addActionListener(a -> {
+			btnStarten.setEnabled(false);
 			Thread worker = new Thread(() -> {
 //				BubbleSort s = new BubbleSort(labels);
-				for(int i = 0; i < 1000; i++) {
-					Integer[] liste = genList(10000);
-					
-					for(int j = 0; j < labels.length; j++){
-						labels[j].setText(liste[j] + "");
-					}
-					
-					QuickSort s = new QuickSort(labels);
-					s.sortVisualized(liste);
-					
-					for(int k = 0; k < liste.length-1; k++) {
-						if(liste[k] > liste[k+1]) System.out.println("Fehler: Indexe=[" + k + "," + (k+1) + "], " + liste[k] + " > " + liste[k+1]);
-					}
-					
-				}
+				
+				SelectionSort s = new SelectionSort(labels);
+				s.sortVisualized(list);
+				
+//				for(int i = 0; i < 1000; i++) {
+//					Integer[] liste = genList(10000);
+//					
+//					for(int j = 0; j < labels.length; j++){
+//						labels[j].setText(liste[j] + "");
+//					}
+//					
+//					SelectionSort s = new SelectionSort(labels);
+//					s.sortVisualized(liste);
+//					
+//					for(int k = 0; k < liste.length-1; k++) {
+//						if(liste[k] > liste[k+1]) System.out.println("Fehler: Indexe=[" + k + "," + (k+1) + "], " + liste[k] + " > " + liste[k+1]);
+//					}
+//					
+//				}
+				btnStarten.setEnabled(true);
 			});
 			worker.start();
 		});
