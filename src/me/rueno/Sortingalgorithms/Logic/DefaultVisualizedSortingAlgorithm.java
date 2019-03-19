@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
-import me.rueno.Sortingalgorithms.UI.IIncrementable;
+import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 
 public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgorithm{
 	
@@ -35,7 +35,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	}
 	
 	@Override
-	public abstract <C extends Comparable<C>> void sortVisualized(C[] list, IIncrementable incrementable);
+	public abstract <C extends Comparable<C>> void sortVisualized(C[] list);
 	
 	@Override
 	public final <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed){
@@ -138,7 +138,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	
 	private void sleepAppropiateAmountOfTimeForCompare(int speed){
 		try{
-			Thread.sleep(500);
+			Thread.sleep((long) (500 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 		}catch(InterruptedException interrupted){
 			interrupted.printStackTrace();
 		}
@@ -146,7 +146,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	
 	private void sleepAfterStep(int speed){
 		try{
-			Thread.sleep(300);
+			Thread.sleep((long) (300 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 		}catch(InterruptedException interrupted){
 			interrupted.printStackTrace();
 		}
@@ -154,7 +154,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	
 	private void sleepAppropiateAmountOfTimeForSwap(int speed){
 		try{
-			Thread.sleep(17);
+			Thread.sleep((long) (17 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 		}catch(InterruptedException interrupted){
 			interrupted.printStackTrace();
 		}

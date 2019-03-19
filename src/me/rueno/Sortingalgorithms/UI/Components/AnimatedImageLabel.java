@@ -12,7 +12,7 @@ public class AnimatedImageLabel extends JLabel{
 	private String resourcePrefix;
 	private int delay, imageAmount, width, height;
 	private int currentImage;
-	private boolean preload;
+	private boolean preload, interrupted;
 	private ImageIcon[] images;
 	
 	private Thread renderer;
@@ -24,6 +24,7 @@ public class AnimatedImageLabel extends JLabel{
 		this.width = width;
 		this.height = height;
 		this.currentImage = 0;
+		this.interrupted = false;
 		
 		if(preload){
 			images = new ImageIcon[imageAmount];
@@ -35,28 +36,37 @@ public class AnimatedImageLabel extends JLabel{
 		
 		this.renderer = new Thread(() -> {
 			while(true){
+				while(!interrupted){
+					try{
+						ImageIcon next;
+						
+						if(preload){
+							next = images[currentImage];
+						}else{
+							Image scaled = new ImageIcon(AnimatedImageLabel.class.getResource(resourcePrefix + currentImage + ".png")).getImage()
+									.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+							next = new ImageIcon(scaled);
+						}
+						this.currentImage = (currentImage + 1) % imageAmount;
+						this.setIcon(next);
+						
+						repaint();
+						
+						Thread.sleep(delay);
+					}catch(InterruptedException interrupted){}
+				}
 				try{
-					ImageIcon next;
-					
-					if(preload){
-						next = images[currentImage];
-					}else{
-						Image scaled = new ImageIcon(AnimatedImageLabel.class.getResource(resourcePrefix + currentImage + ".png")).getImage()
-								.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-						next = new ImageIcon(scaled);
-					}
-					this.currentImage = (currentImage + 1) % imageAmount;
-					this.setIcon(next);
-					
-					repaint();
-					
-					Thread.sleep(delay);
-				}catch(InterruptedException interrupted){}
+					Thread.sleep(100);
+				}catch(Exception e){}
 			}
+			
 		});
-		
 		renderer.setDaemon(true);
 		renderer.start();
+	}
+	
+	public void setInterrupted(boolean interrupt){
+		this.interrupted = interrupt;
 	}
 	
 }

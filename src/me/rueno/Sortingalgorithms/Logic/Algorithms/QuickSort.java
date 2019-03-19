@@ -3,7 +3,6 @@ package me.rueno.Sortingalgorithms.Logic.Algorithms;
 import javax.swing.JLabel;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
-import me.rueno.Sortingalgorithms.UI.IIncrementable;
 
 public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	
@@ -12,7 +11,7 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list, IIncrementable incrementable){
+	public <C extends Comparable<C>> void sortVisualized(C[] list){
 		qSortVis(list, 0, list.length-1);
 	}
 	
@@ -46,34 +45,49 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	protected <C extends Comparable<C>> long[] sort(C[] list){
-		long resaves = 0, comparations = 0;
-		qSort(list, 0, list.length-1);
-		return new long[] {resaves, comparations};
+		long[] data = qSort(list, 0, list.length-1);
+		return data;
 	}
 	
-	private <C extends Comparable<C>> void qSort(C[] list, int start, int end){
-		if(start >= end) return;
+	/**
+	 * @return {resaves, comparasons}
+	 */
+	private <C extends Comparable<C>> long[] qSort(C[] list, int start, int end){
+		if(start >= end) return new long[] {0, 0};
+		
+		long resaves = 0, comparasons = 0;
 		
 		int pivIndex = start + (end - start) / 2;
 		C pivot = list[pivIndex];
 		
 		int i = start, j = end;
-		while(i <= j){
-			while(list[i].compareTo(pivot) < 0) i++;
-			while(list[j].compareTo(pivot) > 0) j--;
+		
+		while(i <= j){ comparasons++;
+			while(list[i].compareTo(pivot) < 0){ comparasons++;
+				i++; resaves++;
+			} comparasons++;
+			while(list[j].compareTo(pivot) > 0){ comparasons++;
+				j--; resaves++;
+			} comparasons++;
 			
 			if(i <= j){
-				if(j == pivIndex) pivIndex = i;
-				if(i == pivIndex) pivIndex = j;
-				
-				swap(list, i, j);
-				i++;
-				j--;
-			}
+				swap(list, i, j); resaves += 3;
+				i++; resaves++;
+				j--; resaves++;
+			} comparasons++;
 		}
 		
-		if(start < j) qSortVis(list, start, j);
-		if(end > i) qSortVis(list, i, end);
+		if(start < j){
+			long[] data = qSort(list, start, j);
+			resaves += data[0];
+			comparasons += data[1];
+		} comparasons++;
+		if(end > i){
+			long[] data = qSort(list, i, end);
+			resaves += data[0];
+			comparasons += data[1];
+		} comparasons++;
+		return new long[] {resaves, comparasons};
 	}
 	
 }

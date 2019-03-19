@@ -13,6 +13,7 @@ import javax.swing.border.TitledBorder;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 import me.rueno.Sortingalgorithms.Logic.Algorithms.*;
+import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 
@@ -32,8 +33,10 @@ import javax.swing.JSeparator;
 
 import me.rueno.Sortingalgorithms.Lists.ListGenerator;
 import me.rueno.Sortingalgorithms.Lists.ListType;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowEvent;
 
-public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable{
+public class VisualizedSortingAlgorithm extends JFrame{
 	
 	private static final long serialVersionUID = 1307277800133861093L;
 	
@@ -47,14 +50,28 @@ public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable
 	private JPanel panelSettings;
 	private JComboBox<String> cbListSortMethod;
 	private JComboBox<String> cbListContent;
+	private AnimatedImageLabel animation;
 	
 	private NumberFormat nf;
 	private JLabel lblComparations;
 	private JLabel lblResaves;
 	private JLabel lblRuntime;
 	
+//	private Thread runtimeSort;
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
+		addWindowFocusListener(new WindowFocusListener(){
+			
+			public void windowGainedFocus(WindowEvent e){
+				animation.setInterrupted(false);
+			}
+			
+			public void windowLostFocus(WindowEvent e){
+				animation.setInterrupted(true);
+			}
+		});
+		
 		setResizable(false);
 		this.gen = new ListGenerator();
 		this.nf = NumberFormat.getInstance(Locale.GERMANY);
@@ -264,22 +281,31 @@ public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable
 		panel_1.add(label_11);
 		
 		JSlider sliderSpeedMultiplier = new JSlider();
-		sliderSpeedMultiplier.setFocusable(false);
-		sliderSpeedMultiplier.setMinimum(1);
 		sliderSpeedMultiplier.setSnapToTicks(true);
-		sliderSpeedMultiplier.setMinorTickSpacing(5);
-		sliderSpeedMultiplier.setMajorTickSpacing(10);
+		sliderSpeedMultiplier.setToolTipText("");
+		sliderSpeedMultiplier.setValue(100);
+		sliderSpeedMultiplier.setMaximum(200);
+		sliderSpeedMultiplier.setFocusable(false);
+		sliderSpeedMultiplier.setMinorTickSpacing(10);
+		sliderSpeedMultiplier.setMajorTickSpacing(20);
 		sliderSpeedMultiplier.setPaintTicks(true);
-		sliderSpeedMultiplier.setBounds(380, 351, 200, 32);
+		sliderSpeedMultiplier.setBounds(190, 351, 390, 32);
+		sliderSpeedMultiplier.addChangeListener(change -> {
+			GlobalVars.SPEED_MULTIPLIER = sliderSpeedMultiplier.getValue() / 100.0F;
+			if(GlobalVars.SPEED_MULTIPLIER < 0.05F){
+				GlobalVars.SPEED_MULTIPLIER = 0.05F;
+				System.out.println("Set to 5 Percent!");
+			}
+		});
 		panel_1.add(sliderSpeedMultiplier);
 		
 		JLabel lblSimulationsgeschwindigkeit = new JLabel("Simulationsgeschwindigkeit:");
-		lblSimulationsgeschwindigkeit.setBounds(248, 364, 132, 14);
+		lblSimulationsgeschwindigkeit.setBounds(54, 360, 132, 14);
 		panel_1.add(lblSimulationsgeschwindigkeit);
 		
-		AnimatedImageLabel lblNewLabel = new PepePls(89, 78);
-		lblNewLabel.setBounds(-20, 318, 89, 78);
-		panel_1.add(lblNewLabel);
+		animation = new PepePls(89, 78);
+		animation.setBounds(-20, 318, 89, 78);
+		panel_1.add(animation);
 		
 		btnStart = new JButton("Starten");
 		btnStart.setBounds(585, 360, 89, 23);
@@ -347,6 +373,8 @@ public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable
 		labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
 		list = gen.generateIntegerList(labels.length, ListType.RANDOM);
 		
+//		Thread runtimeSort;
+		
 		btnStart.addActionListener(a -> {
 			setComponentsEnabled(false);
 			lblRuntime.setText("0 ms");
@@ -354,17 +382,17 @@ public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable
 			lblComparations.setText("0");
 			
 			Thread worker = new Thread(() -> {
-				algo.sortVisualized(list, VisualizedSortingAlgorithm.this);
+				algo.sortVisualized(list);
 				setComponentsEnabled(true);
 			});
 			worker.start();
 			
-			Thread runtimeSort = new Thread(() -> {
-				Comparable[] array = generateListWithSelectedSettings(100000);
-				long[] data = algo.measureAlgorithm(array);
-				setStatistics(data[1], data[2], data[0]);
-			});
-			runtimeSort.start();
+//			runtimeSort = new Thread(() -> {
+//				Comparable[] array = generateListWithSelectedSettings(100000);
+//				long[] data = algo.measureAlgorithm(array);
+//				setStatistics(data[1], data[2], data[0]);
+//			});
+//			runtimeSort.start();
 		});
 		
 		for(int i = 0; i < labels.length; i++){
@@ -373,14 +401,6 @@ public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable
 			labels[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		}
 		
-		Thread th = new Thread(() -> {
-			lblNewLabel.revalidate();
-			lblNewLabel.repaint();
-			try{
-				Thread.sleep(20);
-			}catch(Exception e) {}
-		});
-		th.start();
 		this.algo = new BubbleSort(labels);
 	}
 	

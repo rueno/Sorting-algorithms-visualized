@@ -3,7 +3,6 @@ package me.rueno.Sortingalgorithms.Logic.Algorithms;
 import javax.swing.JLabel;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
-import me.rueno.Sortingalgorithms.UI.IIncrementable;
 
 public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 	
@@ -12,7 +11,7 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list, IIncrementable incrementable){
+	public <C extends Comparable<C>> void sortVisualized(C[] list){
 		int n = list.length;
 		int minIndex;
 		int i = 0;

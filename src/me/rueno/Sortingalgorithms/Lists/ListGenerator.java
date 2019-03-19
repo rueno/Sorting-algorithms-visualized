@@ -24,7 +24,7 @@ public class ListGenerator{
 				
 				break;
 			case ASCENDING:
-				int start = genIntegerInRange(-5000 + length, 10000 - length);
+				int start = genIntegerInRange(-5000, 10000);
 				for(int i = 0; i < list.length; i++){
 					list[i] = start++;
 				}
