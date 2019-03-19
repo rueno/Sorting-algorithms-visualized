@@ -4,18 +4,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Color;
-import java.util.Random;
+import java.awt.Component;
 
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 import me.rueno.Sortingalgorithms.Logic.Algorithms.*;
-import me.rueno.Sortingalgorithms.Logic.Algorithms.SelectionSort;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
-import me.rueno.Sortingalgorithms.UI.Components.PepoDance;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -26,18 +25,28 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import javax.swing.JTextPane;
-import java.awt.SystemColor;
 import javax.swing.JSeparator;
+
+import me.rueno.Sortingalgorithms.Lists.ListGenerator;
+import me.rueno.Sortingalgorithms.Lists.ListType;
 
 public class VisualizedSortingAlgorithm extends JFrame{
 	
 	private static final long serialVersionUID = 1307277800133861093L;
 	
-	private Random r;
+	@SuppressWarnings("rawtypes")
+	private Comparable[] list;
+	private ListGenerator gen;
+	private JLabel[] labels;
+	private DefaultVisualizedSortingAlgorithm algo;
+	private JPanel panel_AlgorithmRdbtns;
+	private JButton btnStart;
+	private JPanel panelSettings;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
 		setResizable(false);
-		this.r = new Random();
+		this.gen = new ListGenerator();
 		
 		setTitle("Sortieralgorithmen (visualisiert)");
 		setSize(720, 606);
@@ -52,44 +61,56 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Sortieralgorithmus", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 21, 200, 117);
-		panel.add(panel_2);
-		panel_2.setLayout(null);
+		panel_AlgorithmRdbtns = new JPanel();
+		panel_AlgorithmRdbtns.setBorder(new TitledBorder(null, "Sortieralgorithmus", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_AlgorithmRdbtns.setBounds(10, 21, 200, 117);
+		panel.add(panel_AlgorithmRdbtns);
+		panel_AlgorithmRdbtns.setLayout(null);
 		
 		JRadioButton rdbtnBubblesort = new JRadioButton("Bubblesort");
 		rdbtnBubblesort.setFocusPainted(false);
 		rdbtnBubblesort.setSelected(true);
 		rdbtnBubblesort.setBounds(6, 21, 87, 23);
-		panel_2.add(rdbtnBubblesort);
+		rdbtnBubblesort.addActionListener(a -> {
+			algo = new BubbleSort(labels);
+		});
+		panel_AlgorithmRdbtns.add(rdbtnBubblesort);
 		
 		JRadioButton rdbtnInsertionsort = new JRadioButton("Insertionsort");
 		rdbtnInsertionsort.setFocusPainted(false);
 		rdbtnInsertionsort.setBounds(6, 47, 87, 23);
-		panel_2.add(rdbtnInsertionsort);
+		rdbtnInsertionsort.addActionListener(a -> {
+			algo = new InsertionSort(labels);
+		});
+		panel_AlgorithmRdbtns.add(rdbtnInsertionsort);
 		
 		JRadioButton rdbtnSelectionsort = new JRadioButton("Selectionsort");
 		rdbtnSelectionsort.setFocusPainted(false);
 		rdbtnSelectionsort.setBounds(6, 73, 87, 23);
-		panel_2.add(rdbtnSelectionsort);
+		rdbtnSelectionsort.addActionListener(a -> {
+			algo = new SelectionSort(labels);
+		});
+		panel_AlgorithmRdbtns.add(rdbtnSelectionsort);
 		
 		JRadioButton rdbtnQuicksort = new JRadioButton("Quicksort");
 		rdbtnQuicksort.setFocusPainted(false);
 		rdbtnQuicksort.setBounds(95, 21, 71, 23);
-		panel_2.add(rdbtnQuicksort);
+		rdbtnQuicksort.addActionListener(a -> {
+			algo = new QuickSort(labels);
+		});
+		panel_AlgorithmRdbtns.add(rdbtnQuicksort);
 		
 		JRadioButton rdbtnShellsort = new JRadioButton("Shellsort");
 		rdbtnShellsort.setEnabled(false);
 		rdbtnShellsort.setFocusPainted(false);
 		rdbtnShellsort.setBounds(95, 47, 71, 23);
-		panel_2.add(rdbtnShellsort);
+		panel_AlgorithmRdbtns.add(rdbtnShellsort);
 		
 		JRadioButton rdbtnMergesort = new JRadioButton("Mergesort");
 		rdbtnMergesort.setEnabled(false);
 		rdbtnMergesort.setFocusPainted(false);
 		rdbtnMergesort.setBounds(95, 73, 75, 23);
-		panel_2.add(rdbtnMergesort);
+		panel_AlgorithmRdbtns.add(rdbtnMergesort);
 		
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnMergesort);
@@ -99,54 +120,82 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		group.add(rdbtnInsertionsort);
 		group.add(rdbtnBubblesort);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(null, "Listeneinstellungen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(220, 21, 454, 117);
-		panel.add(panel_3);
-		panel_3.setLayout(null);
+		panelSettings = new JPanel();
+		panelSettings.setBorder(new TitledBorder(null, "Listeneinstellungen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelSettings.setBounds(220, 21, 454, 117);
+		panel.add(panelSettings);
+		panelSettings.setLayout(null);
 		
 		JLabel lblSortierung = new JLabel("Sortierung:");
 		lblSortierung.setBounds(10, 21, 54, 14);
-		panel_3.add(lblSortierung);
+		panelSettings.add(lblSortierung);
 		
 		JComboBox<String> cbListSortMethod = new JComboBox<>();
 		cbListSortMethod.setFocusable(false);
-		cbListSortMethod.setModel(new DefaultComboBoxModel<>(new String[] {"Zufällig", "Aufsteigend", "Absteigend"}));
+		cbListSortMethod.setModel(new DefaultComboBoxModel(ListType.values()));
 		cbListSortMethod.setSelectedIndex(0);
 		cbListSortMethod.setBounds(74, 18, 150, 20);
-		panel_3.add(cbListSortMethod);
+		panelSettings.add(cbListSortMethod);
 		
 		JLabel lblTyp = new JLabel("Typ:");
 		lblTyp.setBounds(10, 46, 54, 14);
-		panel_3.add(lblTyp);
+		panelSettings.add(lblTyp);
 		
 		JComboBox<String> cbListContent = new JComboBox<>();
 		cbListContent.setFocusable(false);
 		cbListContent.setModel(new DefaultComboBoxModel<>(new String[] {"Integer", "Long", "Float", "Double", "String"}));
 		cbListContent.setSelectedIndex(0);
 		cbListContent.setBounds(74, 43, 150, 20);
-		panel_3.add(cbListContent);
+		panelSettings.add(cbListContent);
 		
 		JButton btnListTypeInfo = new JButton("?");
 		btnListTypeInfo.setFocusPainted(false);
 		btnListTypeInfo.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnListTypeInfo.setBounds(234, 42, 23, 23);
-		panel_3.add(btnListTypeInfo);
+		panelSettings.add(btnListTypeInfo);
 		
 		JButton btnListSortTypeInfo = new JButton("?");
 		btnListSortTypeInfo.setFocusPainted(false);
 		btnListSortTypeInfo.setBounds(234, 17, 23, 23);
-		panel_3.add(btnListSortTypeInfo);
+		panelSettings.add(btnListSortTypeInfo);
 		
 		JButton btnOwnList = new JButton("Liste manuell eingeben");
 		btnOwnList.setFocusPainted(false);
 		btnOwnList.setBounds(303, 17, 141, 23);
-		panel_3.add(btnOwnList);
+		panelSettings.add(btnOwnList);
 		
-		JButton btnConfirm = new JButton("Übernehmen");
+		JButton btnConfirm = new JButton("Generieren");
 		btnConfirm.setFocusPainted(false);
 		btnConfirm.setBounds(303, 42, 141, 23);
-		panel_3.add(btnConfirm);
+		btnConfirm.addActionListener(action -> {
+			int length = labels.length;
+			ListType type = (ListType) cbListSortMethod.getSelectedItem();
+			switch(cbListContent.getSelectedIndex()) {
+				case 0: //Integer
+					list = gen.generateIntegerList(length, type);
+					break;
+				case 1: //Long
+					list = gen.generateLongList(length, type);
+					break;
+				case 2: //Float
+					list = gen.generateFloatList(length, type);
+					break;
+				case 3: //Double
+					list = gen.generateDoubleList(length, type);
+					break;
+				case 4: //String
+					list = gen.generateStringList(length);
+					break;
+				default:
+					break;
+			}
+			
+			for(int i = 0; i < length; i++){
+				labels[i].setText(list[i] + "");
+			}
+			
+		});
+		panelSettings.add(btnConfirm);
 		
 		JTextPane txtpnGanzeZahlenWerden = new JTextPane();
 		txtpnGanzeZahlenWerden.setFocusable(false);
@@ -155,7 +204,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		txtpnGanzeZahlenWerden.setText("Ganze Zahlen werden maximal bis 10.000 unterstützt. Strings haben maximal 6 Zeichen. Kommazahlen haben maximal 2 Vorkommastellen und maximal 2 Nachkommastellen.");
 		txtpnGanzeZahlenWerden.setHighlighter(null);
 		txtpnGanzeZahlenWerden.setBounds(10, 71, 434, 35);
-		panel_3.add(txtpnGanzeZahlenWerden);
+		panelSettings.add(txtpnGanzeZahlenWerden);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Sortierungsvorgang", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -241,7 +290,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblNewLabel.setBounds(-20, 318, 89, 78);
 		panel_1.add(lblNewLabel);
 		
-		JButton btnStart = new JButton("Starten");
+		btnStart = new JButton("Starten");
 		btnStart.setBounds(585, 360, 89, 23);
 		panel_1.add(btnStart);
 		btnStart.setFocusPainted(false);
@@ -251,6 +300,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		panel_1.add(separator);
 		
 		JButton btnIntelAboutProcedure = new JButton("Infos zum Verfahren");
+		btnIntelAboutProcedure.setFocusPainted(false);
 		btnIntelAboutProcedure.setBounds(540, 304, 134, 23);
 		panel_1.add(btnIntelAboutProcedure);
 		
@@ -267,36 +317,49 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		textPane.setFocusable(false);
 		textPane.setBackground(UIManager.getColor("panel.background"));
 		textPane.setHighlighter(null);
-		textPane.setBounds(10, 175, 664, 118);
+		textPane.setBounds(10, 175, 450, 118);
+		textPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		panel_1.add(textPane);
 		
-		Integer[] list = genList(10000);
-		JLabel[] labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
+		JLabel lblStatistiken = new JLabel("Statistiken:");
+		lblStatistiken.setBounds(490, 158, 54, 14);
+		panel_1.add(lblStatistiken);
+		
+		JLabel lblUmspeicherungen = new JLabel("Umspeicherungen:");
+		lblUmspeicherungen.setBounds(490, 183, 90, 14);
+		panel_1.add(lblUmspeicherungen);
+		
+		JLabel lblVergleiche = new JLabel("Vergleiche:");
+		lblVergleiche.setBounds(490, 208, 90, 14);
+		panel_1.add(lblVergleiche);
+		
+		JLabel lblLaufzeit = new JLabel("Laufzeit (o. Vis.):");
+		lblLaufzeit.setBounds(490, 233, 90, 14);
+		panel_1.add(lblLaufzeit);
+		
+		JLabel lblResaves = new JLabel("0");
+		lblResaves.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblResaves.setBounds(590, 183, 84, 14);
+		panel_1.add(lblResaves);
+		
+		JLabel lblComparations = new JLabel("0");
+		lblComparations.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblComparations.setBounds(590, 208, 84, 14);
+		panel_1.add(lblComparations);
+		
+		JLabel lblRuntime = new JLabel("0 ms");
+		lblRuntime.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblRuntime.setBounds(590, 233, 84, 14);
+		panel_1.add(lblRuntime);
+		
+		labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
+		list = gen.generateIntegerList(labels.length, ListType.RANDOM);
 		
 		btnStart.addActionListener(a -> {
-			btnStart.setEnabled(false);
+			setComponentsEnabled(false);
 			Thread worker = new Thread(() -> {
-//				BubbleSort s = new BubbleSort(labels);
-				
-				SelectionSort s = new SelectionSort(labels);
-				s.sortVisualized(list);
-				
-//				for(int i = 0; i < 1000; i++) {
-//					Integer[] liste = genList(10000);
-//					
-//					for(int j = 0; j < labels.length; j++){
-//						labels[j].setText(liste[j] + "");
-//					}
-//					
-//					SelectionSort s = new SelectionSort(labels);
-//					s.sortVisualized(liste);
-//					
-//					for(int k = 0; k < liste.length-1; k++) {
-//						if(liste[k] > liste[k+1]) System.out.println("Fehler: Indizes=[" + k + "," + (k+1) + "], " + liste[k] + " > " + liste[k+1]);
-//					}
-//					
-//				}
-				btnStart.setEnabled(true);
+				algo.sortVisualized(list);
+				setComponentsEnabled(true);
 			});
 			worker.start();
 		});
@@ -315,19 +378,18 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			}catch(Exception e) {}
 		});
 		th.start();
-		
+		this.algo = new BubbleSort(labels);
 	}
 	
-	private Integer[] genList(int max){
-		Integer[] result = new Integer[12];
-		
-		for(int i = 0; i < result.length; i++){
-			result[i] = genNumber(0, max);
+	private void setComponentsEnabled(boolean enabled){
+		btnStart.setEnabled(enabled);
+		for(Component comp: panel_AlgorithmRdbtns.getComponents()){
+			comp.setEnabled(enabled);
 		}
-		return result;
-	}
-	
-	private int genNumber(int min, int max){
-		return r.nextInt((max - min) + 1) + min;
+		for(Component c: panelSettings.getComponents()){
+			if(!(c instanceof JTextPane)){
+				c.setEnabled(enabled);
+			}
+		}
 	}
 }
