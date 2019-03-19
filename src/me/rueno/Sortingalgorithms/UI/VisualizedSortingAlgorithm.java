@@ -24,13 +24,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.JTextPane;
 import javax.swing.JSeparator;
 
 import me.rueno.Sortingalgorithms.Lists.ListGenerator;
 import me.rueno.Sortingalgorithms.Lists.ListType;
 
-public class VisualizedSortingAlgorithm extends JFrame{
+public class VisualizedSortingAlgorithm extends JFrame implements IIncrementable{
 	
 	private static final long serialVersionUID = 1307277800133861093L;
 	
@@ -42,11 +45,19 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private JPanel panel_AlgorithmRdbtns;
 	private JButton btnStart;
 	private JPanel panelSettings;
+	private JComboBox<String> cbListSortMethod;
+	private JComboBox<String> cbListContent;
+	
+	private NumberFormat nf;
+	private JLabel lblComparations;
+	private JLabel lblResaves;
+	private JLabel lblRuntime;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
 		setResizable(false);
 		this.gen = new ListGenerator();
+		this.nf = NumberFormat.getInstance(Locale.GERMANY);
 		
 		setTitle("Sortieralgorithmen (visualisiert)");
 		setSize(720, 606);
@@ -130,7 +141,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblSortierung.setBounds(10, 21, 54, 14);
 		panelSettings.add(lblSortierung);
 		
-		JComboBox<String> cbListSortMethod = new JComboBox<>();
+		cbListSortMethod = new JComboBox<>();
 		cbListSortMethod.setFocusable(false);
 		cbListSortMethod.setModel(new DefaultComboBoxModel(ListType.values()));
 		cbListSortMethod.setSelectedIndex(0);
@@ -141,7 +152,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblTyp.setBounds(10, 46, 54, 14);
 		panelSettings.add(lblTyp);
 		
-		JComboBox<String> cbListContent = new JComboBox<>();
+		cbListContent = new JComboBox<>();
 		cbListContent.setFocusable(false);
 		cbListContent.setModel(new DefaultComboBoxModel<>(new String[] {"Integer", "Long", "Float", "Double", "String"}));
 		cbListContent.setSelectedIndex(0);
@@ -168,29 +179,9 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		btnConfirm.setFocusPainted(false);
 		btnConfirm.setBounds(303, 42, 141, 23);
 		btnConfirm.addActionListener(action -> {
-			int length = labels.length;
-			ListType type = (ListType) cbListSortMethod.getSelectedItem();
-			switch(cbListContent.getSelectedIndex()) {
-				case 0: //Integer
-					list = gen.generateIntegerList(length, type);
-					break;
-				case 1: //Long
-					list = gen.generateLongList(length, type);
-					break;
-				case 2: //Float
-					list = gen.generateFloatList(length, type);
-					break;
-				case 3: //Double
-					list = gen.generateDoubleList(length, type);
-					break;
-				case 4: //String
-					list = gen.generateStringList(length);
-					break;
-				default:
-					break;
-			}
+			list = generateListWithSelectedSettings(12);
 			
-			for(int i = 0; i < length; i++){
+			for(int i = 0; i < 12; i++){
 				labels[i].setText(list[i] + "");
 			}
 			
@@ -321,8 +312,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		textPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		panel_1.add(textPane);
 		
-		JLabel lblStatistiken = new JLabel("Statistiken:");
-		lblStatistiken.setBounds(490, 158, 54, 14);
+		JLabel lblStatistiken = new JLabel("Statistiken für Liste mit 100.000 Elementen:");
+		lblStatistiken.setBounds(462, 158, 212, 14);
 		panel_1.add(lblStatistiken);
 		
 		JLabel lblUmspeicherungen = new JLabel("Umspeicherungen:");
@@ -333,21 +324,22 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblVergleiche.setBounds(490, 208, 90, 14);
 		panel_1.add(lblVergleiche);
 		
-		JLabel lblLaufzeit = new JLabel("Laufzeit (o. Vis.):");
+		JLabel lblLaufzeit = new JLabel("Laufzeit(*):");
+		lblLaufzeit.setToolTipText("Simuliert eine Sortierung einer oben eingestellten Liste mit 100.000 Elementen und rechts die benötigte Zeit aus");
 		lblLaufzeit.setBounds(490, 233, 90, 14);
 		panel_1.add(lblLaufzeit);
 		
-		JLabel lblResaves = new JLabel("0");
+		lblResaves = new JLabel("0");
 		lblResaves.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblResaves.setBounds(590, 183, 84, 14);
 		panel_1.add(lblResaves);
 		
-		JLabel lblComparations = new JLabel("0");
+		lblComparations = new JLabel("0");
 		lblComparations.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblComparations.setBounds(590, 208, 84, 14);
 		panel_1.add(lblComparations);
 		
-		JLabel lblRuntime = new JLabel("0 ms");
+		lblRuntime = new JLabel("0 ms");
 		lblRuntime.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRuntime.setBounds(590, 233, 84, 14);
 		panel_1.add(lblRuntime);
@@ -357,11 +349,22 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		
 		btnStart.addActionListener(a -> {
 			setComponentsEnabled(false);
+			lblRuntime.setText("0 ms");
+			lblResaves.setText("0");
+			lblComparations.setText("0");
+			
 			Thread worker = new Thread(() -> {
-				algo.sortVisualized(list);
+				algo.sortVisualized(list, VisualizedSortingAlgorithm.this);
 				setComponentsEnabled(true);
 			});
 			worker.start();
+			
+			Thread runtimeSort = new Thread(() -> {
+				Comparable[] array = generateListWithSelectedSettings(100000);
+				long[] data = algo.measureAlgorithm(array);
+				setStatistics(data[1], data[2], data[0]);
+			});
+			runtimeSort.start();
 		});
 		
 		for(int i = 0; i < labels.length; i++){
@@ -379,6 +382,32 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		});
 		th.start();
 		this.algo = new BubbleSort(labels);
+	}
+	
+	private void setStatistics(long resaves, long comparations, long runtime){
+		lblResaves.setText(nf.format(resaves));
+		lblComparations.setText(nf.format(comparations));
+		lblRuntime.setText(nf.format(runtime) + " ms");
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private Comparable[] generateListWithSelectedSettings(int length){
+		ListType type = (ListType) cbListSortMethod.getSelectedItem();
+		switch(cbListContent.getSelectedIndex()) {
+			case 0: //Integer
+				return gen.generateIntegerList(length, type);
+			case 1: //Long
+				return gen.generateLongList(length, type);
+			case 2: //Float
+				return gen.generateFloatList(length, type);
+			case 3: //Double
+				return gen.generateDoubleList(length, type);
+			case 4: //String
+				return gen.generateStringList(length);
+			default:
+				break;
+		}
+		return null;
 	}
 	
 	private void setComponentsEnabled(boolean enabled){

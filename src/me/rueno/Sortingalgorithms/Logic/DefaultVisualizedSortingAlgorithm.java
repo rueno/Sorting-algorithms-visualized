@@ -5,6 +5,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import me.rueno.Sortingalgorithms.UI.IIncrementable;
+
 public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgorithm{
 	
 	private JLabel[] labels;
@@ -20,11 +22,20 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		this.labels = labels;
 	}
 	
-	@Override
-	public abstract long mearsureSortTime();
+	/**
+	 * @return new long[] {resaves, comparations};
+	 */
+	protected abstract <C extends Comparable<C>> long[] sort(C[] list);
 	
 	@Override
-	public abstract <C extends Comparable<C>> void sortVisualized(C[] list);
+	public final <C extends Comparable<C>> long[] measureAlgorithm(C[] list) {
+		long start = System.currentTimeMillis();
+		long[] sort = sort(list);
+		return new long[] { (System.currentTimeMillis() - start), sort[0], sort[1] };
+	}
+	
+	@Override
+	public abstract <C extends Comparable<C>> void sortVisualized(C[] list, IIncrementable incrementable);
 	
 	@Override
 	public final <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed){
@@ -99,6 +110,12 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		labels[posX].setBackground(defaultBackground);
 		labels[posY].setBackground(defaultBackground);
 		sleepAfterStep(currentSpeed);
+	}
+	
+	protected <C extends Comparable<C>> void swap(C[] list, int posX, int posY){
+		C temp = list[posX];
+		list[posX] = list[posY];
+		list[posY] = temp;
 	}
 	
 	/**
