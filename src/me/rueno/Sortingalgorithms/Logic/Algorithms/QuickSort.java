@@ -90,4 +90,9 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		return new long[] {resaves, comparasons};
 	}
 	
+	@Override
+	public String getAlgorithmInfoText(){
+		return getName();
+	}
+	
 }

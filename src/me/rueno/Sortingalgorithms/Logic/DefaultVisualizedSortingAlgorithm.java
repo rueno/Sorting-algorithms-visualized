@@ -9,9 +9,9 @@ import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 
 public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgorithm{
 	
-	private JLabel[] labels;
-	
 	private final Color defaultBackground;
+	
+	private JLabel[] labels;
 	
 	public DefaultVisualizedSortingAlgorithm(JLabel[] panels){
 		this.labels = panels;
@@ -28,10 +28,19 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	protected abstract <C extends Comparable<C>> long[] sort(C[] list);
 	
 	@Override
+	public abstract String getAlgorithmInfoText();
+	
+	@Override
 	public final <C extends Comparable<C>> long[] measureAlgorithm(C[] list) {
 		long start = System.currentTimeMillis();
 		long[] sort = sort(list);
 		return new long[] { (System.currentTimeMillis() - start), sort[0], sort[1] };
+	}
+	
+	@Override
+	public final void markAsSorted(int posX){
+		labels[posX].setBackground(Color.GREEN);
+		sleepAppropiateAmountOfTimeForCompare();
 	}
 	
 	@Override
@@ -41,10 +50,10 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	public final <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed){
 		if(posX == posY){
 			JLabel lbl = labels[posX];
-			lbl.setBackground(Color.green);
-			sleepAppropiateAmountOfTimeForCompare(currentSpeed);
+			lbl.setBackground(Color.CYAN);
+			sleepAppropiateAmountOfTimeForCompare();
 			lbl.setBackground(defaultBackground);
-			sleepAfterStep(currentSpeed);
+			sleepAfterStep();
 			return;
 		}
 		
@@ -55,14 +64,14 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		JLabel panelX = labels[posX];
 		JLabel panelY = labels[posY];
 		
-		panelX.setBackground(Color.green);
-		panelY.setBackground(Color.green);
+		panelX.setBackground(Color.CYAN);
+		panelY.setBackground(Color.CYAN);
 		
 		//runter schieben
 		for(int currentYDeviation = 0; currentYDeviation < (int) (panelX.getHeight() * 1.5D); currentYDeviation += currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() + currentSpeed);
 			panelY.setLocation(panelY.getX(), panelY.getY() + currentSpeed);
-			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
+			sleepAppropiateAmountOfTimeForSwap();
 		}
 		
 		//Zum jeweiligen anderen Standpunkt verschieben
@@ -81,7 +90,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 			panelX.setLocation(panelX.getX() + deviationX, panelX.getY());
 			//PanelY verschieben
 			panelY.setLocation(panelY.getX() + deviationY, panelY.getY());
-			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
+			sleepAppropiateAmountOfTimeForSwap();
 		}
 		
 		panelX.setLocation((int) (panelX.getX() + difFromYToX % currentSpeed), panelX.getY());
@@ -99,7 +108,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		for(int currentYDeviation = (int) (panelX.getHeight() * 1.5D); currentYDeviation > 0; currentYDeviation -= currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() - currentSpeed);
 			panelY.setLocation(panelY.getX(), panelY.getY() - currentSpeed);
-			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
+			sleepAppropiateAmountOfTimeForSwap();
 		}
 		
 		//Jetzt noch die Panel im Panelarray vertauschen
@@ -109,7 +118,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		
 		labels[posX].setBackground(defaultBackground);
 		labels[posY].setBackground(defaultBackground);
-		sleepAfterStep(currentSpeed);
+		sleepAfterStep();
 	}
 	
 	protected <C extends Comparable<C>> void swap(C[] list, int posX, int posY){
@@ -127,16 +136,16 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		if(posX == posY) list[posX].compareTo(list[posY]);
 		labels[posX].setBackground(Color.RED);
 		labels[posY].setBackground(Color.RED);
-		sleepAppropiateAmountOfTimeForCompare(speed);
+		sleepAppropiateAmountOfTimeForCompare();
 		
 		labels[posX].setBackground(defaultBackground);
 		labels[posY].setBackground(defaultBackground);
-		sleepAfterStep(speed);
+		sleepAfterStep();
 		
 		return list[posX].compareTo(list[posY]);
 	}
 	
-	private void sleepAppropiateAmountOfTimeForCompare(int speed){
+	private void sleepAppropiateAmountOfTimeForCompare(){
 		try{
 			Thread.sleep((long) (500 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 		}catch(InterruptedException interrupted){
@@ -144,7 +153,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		}
 	}
 	
-	private void sleepAfterStep(int speed){
+	private void sleepAfterStep(){
 		try{
 			Thread.sleep((long) (300 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 		}catch(InterruptedException interrupted){
@@ -152,7 +161,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		}
 	}
 	
-	private void sleepAppropiateAmountOfTimeForSwap(int speed){
+	private void sleepAppropiateAmountOfTimeForSwap(){
 		try{
 			Thread.sleep((long) (17 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 		}catch(InterruptedException interrupted){

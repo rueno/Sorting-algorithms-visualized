@@ -58,4 +58,9 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 		return new long [] {resaves, comparations};
 	}
 	
+	@Override
+	public String getAlgorithmInfoText(){
+		return getName();
+	}
+	
 }

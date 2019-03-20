@@ -24,8 +24,10 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 				}
 				j--;
 			}
+			markAsSorted(i);
 			i++;
 		}
+		markAsSorted(list.length-1);
 	}
 	
 	protected <C extends Comparable<C>> long[] sort(C[] list){
@@ -46,6 +48,11 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 			i++; resaves++;
 		} comparations++;
 		return new long[] {resaves, comparations};
+	}
+	
+	@Override
+	public String getAlgorithmInfoText(){
+		return getName();
 	}
 	
 }

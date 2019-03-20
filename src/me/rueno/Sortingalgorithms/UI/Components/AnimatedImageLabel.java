@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class AnimatedImageLabel extends JLabel{
+public abstract class AnimatedImageLabel extends JLabel{
 	
 	private static final long serialVersionUID = -6238097470939913778L;
 	
@@ -57,7 +57,7 @@ public class AnimatedImageLabel extends JLabel{
 				}
 				try{
 					Thread.sleep(100);
-				}catch(Exception e){}
+				}catch(InterruptedException interrupted){}
 			}
 			
 		});

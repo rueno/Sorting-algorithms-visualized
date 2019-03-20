@@ -75,7 +75,7 @@ public class ListGenerator{
 			case ASCENDING:
 				float start = genFloatInRange(-9.99999F, 99.0F);
 					for(int i = 0; i < list.length; i++){
-						list[i] = start;
+						list[i] = new BigDecimal(start + "").setScale(2, RoundingMode.HALF_UP).floatValue();
 						start += 0.1F;
 					}
 				
@@ -83,7 +83,7 @@ public class ListGenerator{
 			case DESCENDING:
 				float start2 = genFloatInRange(-9.99999F, 99.0F);
 					for(int i = 0; i < list.length; i++){
-						list[i] = start2;
+						list[i] = new BigDecimal(start2 + "").setScale(2, RoundingMode.HALF_UP).floatValue();
 						start2 -= 0.1F;
 					}
 				break;

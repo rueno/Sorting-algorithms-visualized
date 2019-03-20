@@ -8,7 +8,9 @@ public interface ISortingAlgorithm{
 	
 	public <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed);
 	public <C extends Comparable<C>> int compareVisualized(C[] list, int posX, int posY, int currentSpeed);
+	public void markAsSorted(int posX);
 	public <C extends Comparable<C>> void sortVisualized(C[] list);
 	public <C extends Comparable<C>> long[] measureAlgorithm(C[] list);
+	public String getAlgorithmInfoText();
 	
 }

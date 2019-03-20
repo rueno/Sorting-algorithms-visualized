@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import java.text.NumberFormat;
@@ -35,6 +36,10 @@ import me.rueno.Sortingalgorithms.Lists.ListGenerator;
 import me.rueno.Sortingalgorithms.Lists.ListType;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class VisualizedSortingAlgorithm extends JFrame{
 	
@@ -43,6 +48,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	@SuppressWarnings("rawtypes")
 	private Comparable[] list;
 	private ListGenerator gen;
+	private final Color defaultBackground;
 	private JLabel[] labels;
 	private DefaultVisualizedSortingAlgorithm algo;
 	private JPanel panel_AlgorithmRdbtns;
@@ -56,20 +62,25 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private JLabel lblComparations;
 	private JLabel lblResaves;
 	private JLabel lblRuntime;
+	private JTable table;
 	
 //	private Thread runtimeSort;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
-		addWindowFocusListener(new WindowFocusListener(){
+		this.defaultBackground = UIManager.getColor("panel.background");
+		addWindowListener(new WindowAdapter(){
 			
-			public void windowGainedFocus(WindowEvent e){
+			@Override
+			public void windowIconified(WindowEvent e){
+				animation.setInterrupted(true);
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e){
 				animation.setInterrupted(false);
 			}
 			
-			public void windowLostFocus(WindowEvent e){
-				animation.setInterrupted(true);
-			}
 		});
 		
 		setResizable(false);
@@ -199,6 +210,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			list = generateListWithSelectedSettings(12);
 			
 			for(int i = 0; i < 12; i++){
+				labels[i].setBackground(defaultBackground);
 				labels[i].setText(list[i] + "");
 			}
 			
@@ -329,15 +341,6 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblLegende.setBounds(10, 158, 46, 14);
 		panel_1.add(lblLegende);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setEditable(false);
-		textPane.setFocusable(false);
-		textPane.setBackground(UIManager.getColor("panel.background"));
-		textPane.setHighlighter(null);
-		textPane.setBounds(10, 175, 450, 118);
-		textPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		panel_1.add(textPane);
-		
 		JLabel lblStatistiken = new JLabel("Statistiken für Liste mit 100.000 Elementen:");
 		lblStatistiken.setBounds(462, 158, 212, 14);
 		panel_1.add(lblStatistiken);
@@ -370,12 +373,51 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblRuntime.setBounds(590, 233, 84, 14);
 		panel_1.add(lblRuntime);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 183, 470, 124);
+		panel_1.add(scrollPane);
+		
+		table = new JTable();
+		table.setFillsViewportHeight(true);
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Gr\u00FCn", "Feld ist an der korrekten Stelle in der Liste"},
+				{"Rot", "Felder werden miteinander verglichen"},
+				{"Cyan", "Felder werden vertauscht"},
+			},
+			new String[] {
+				"Feldfarbe", "Erkl\u00E4rung"
+			}
+		) {
+			private static final long serialVersionUID = 1L;
+			
+			Class[] columnTypes = new Class[] {
+				String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(92);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(1).setPreferredWidth(266);
+		table.setRowSelectionAllowed(false);
+		
 		labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
 		list = gen.generateIntegerList(labels.length, ListType.RANDOM);
 		
 //		Thread runtimeSort;
 		
 		btnStart.addActionListener(a -> {
+			resetListLabels();
 			setComponentsEnabled(false);
 			lblRuntime.setText("0 ms");
 			lblResaves.setText("0");
@@ -402,6 +444,12 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		}
 		
 		this.algo = new BubbleSort(labels);
+	}
+	
+	private void resetListLabels(){
+		for(int i = 0; i < 12; i++){
+			labels[i].setBackground(defaultBackground);
+		}
 	}
 	
 	private void setStatistics(long resaves, long comparations, long runtime){
