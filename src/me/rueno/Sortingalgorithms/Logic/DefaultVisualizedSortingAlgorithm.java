@@ -1,6 +1,7 @@
 package me.rueno.Sortingalgorithms.Logic;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import javax.swing.JLabel;
 import javax.swing.UIManager;
@@ -26,6 +27,10 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	 * @return new long[] {resaves, comparations};
 	 */
 	protected abstract <C extends Comparable<C>> long[] sort(C[] list);
+	
+	protected final <C extends Comparable<C>> int indexOf(C[] list, C c){
+		return Arrays.asList(list).indexOf(c);
+	}
 	
 	@Override
 	public abstract String getAlgorithmInfoText();

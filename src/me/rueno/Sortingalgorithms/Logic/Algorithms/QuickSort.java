@@ -18,20 +18,17 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	private <C extends Comparable<C>> void qSortVis(C[] list, int start, int end){
 		if(start >= end) return;
 		
-		int pivIndex = start + (end - start) / 2;
-		C pivot = list[pivIndex];
+		int middle = start + (end - start) / 2;
+		C pivot = list[middle];
 		
 		int i = start, j = end;
 		while(i <= j){
-			/**while(*/compareVisualized(list, i, pivIndex, 4)/* < 0) i++*/;
-			/**while(*/compareVisualized(list, j, pivIndex, 4)/* < 0) j--*/;
-			while(list[i].compareTo(pivot) < 0) i++;
-			while(list[j].compareTo(pivot) > 0) j--;
+			while(compareVisualized(list, i, indexOf(list, pivot), 4) < 0) i++;
+			while(compareVisualized(list, j, indexOf(list, pivot), 4) > 0) j--;
+//			while(list[i].compareTo(pivot) < 0) i++;
+//			while(list[j].compareTo(pivot) > 0) j--;
 			
 			if(i <= j){
-				if(j == pivIndex) pivIndex = i;
-				if(i == pivIndex) pivIndex = j;
-				
 				swapVisualized(list, i, j, 4);
 				i++;
 				j--;
