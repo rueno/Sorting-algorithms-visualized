@@ -25,13 +25,13 @@ public abstract class AnimatedImageLabel extends JLabel{
 		this.height = height;
 		this.currentImage = 0;
 		this.interrupted = false;
-		
 		if(preload){
 			images = new ImageIcon[imageAmount];
 			for(int i = 0; i < imageAmount; i++){
 				images[i] = new ImageIcon(new ImageIcon(AnimatedImageLabel.class.getResource(resourcePrefix + i + ".png")).getImage()
 						.getScaledInstance(width, height, Image.SCALE_SMOOTH));
 			}
+			this.setIcon(images[0]);
 		}
 		
 		this.renderer = new Thread(() -> {

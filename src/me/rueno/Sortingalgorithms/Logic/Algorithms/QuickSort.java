@@ -19,14 +19,14 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		if(start >= end) return;
 		
 		int pivIndex = start + (end - start) / 2;
-//		C pivot = list[pivIndex];
+		C pivot = list[pivIndex];
 		
 		int i = start, j = end;
 		while(i <= j){
-			while(compareVisualized(list, i, pivIndex, 4) < 0) i++;
-			while(compareVisualized(list, j, pivIndex, 4) > 0) j--;
-//			while(list[i].compareTo(pivot) < 0) i++;
-//			while(list[j].compareTo(pivot) > 0) j--;
+			/**while(*/compareVisualized(list, i, pivIndex, 4)/* < 0) i++*/;
+			/**while(*/compareVisualized(list, j, pivIndex, 4)/* < 0) j--*/;
+			while(list[i].compareTo(pivot) < 0) i++;
+			while(list[j].compareTo(pivot) > 0) j--;
 			
 			if(i <= j){
 				if(j == pivIndex) pivIndex = i;

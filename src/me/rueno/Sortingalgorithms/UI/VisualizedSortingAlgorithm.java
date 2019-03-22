@@ -16,6 +16,7 @@ import me.rueno.Sortingalgorithms.Logic.Algorithms.*;
 import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
+import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -23,7 +24,6 @@ import javax.swing.JButton;
 import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import java.text.NumberFormat;
@@ -34,7 +34,6 @@ import javax.swing.JSeparator;
 
 import me.rueno.Sortingalgorithms.Lists.ListGenerator;
 import me.rueno.Sortingalgorithms.Lists.ListType;
-import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import javax.swing.JTable;
@@ -62,9 +61,10 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private JLabel lblComparations;
 	private JLabel lblResaves;
 	private JLabel lblRuntime;
+	private AnimatedImageLabel pikaRun;
 	private JTable table;
 	
-//	private Thread runtimeSort;
+	private Thread runtimeSort;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
@@ -306,7 +306,6 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			GlobalVars.SPEED_MULTIPLIER = sliderSpeedMultiplier.getValue() / 100.0F;
 			if(GlobalVars.SPEED_MULTIPLIER < 0.05F){
 				GlobalVars.SPEED_MULTIPLIER = 0.05F;
-				System.out.println("Set to 5 Percent!");
 			}
 		});
 		panel_1.add(sliderSpeedMultiplier);
@@ -330,7 +329,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		
 		JButton btnIntelAboutProcedure = new JButton("Infos zum Verfahren");
 		btnIntelAboutProcedure.setFocusPainted(false);
-		btnIntelAboutProcedure.setBounds(540, 304, 134, 23);
+		btnIntelAboutProcedure.setBounds(540, 11, 134, 23);
 		panel_1.add(btnIntelAboutProcedure);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -353,8 +352,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblVergleiche.setBounds(490, 208, 90, 14);
 		panel_1.add(lblVergleiche);
 		
-		JLabel lblLaufzeit = new JLabel("Laufzeit(*):");
-		lblLaufzeit.setToolTipText("Simuliert eine Sortierung einer oben eingestellten Liste mit 100.000 Elementen und rechts die benötigte Zeit aus");
+		JLabel lblLaufzeit = new JLabel("Laufzeit:");
+		lblLaufzeit.setToolTipText("");
 		lblLaufzeit.setBounds(490, 233, 90, 14);
 		panel_1.add(lblLaufzeit);
 		
@@ -374,8 +373,14 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		panel_1.add(lblRuntime);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 183, 470, 124);
+		scrollPane.setBounds(10, 183, 446, 124);
 		panel_1.add(scrollPane);
+		
+		pikaRun = new PikaRun(184, 50);
+		pikaRun.setSize(184, 50);
+		pikaRun.setLocation(490, 257);
+		panel_1.add(pikaRun);
+		pikaRun.setInterrupted(true);
 		
 		table = new JTable();
 		table.setFillsViewportHeight(true);
@@ -385,26 +390,13 @@ public class VisualizedSortingAlgorithm extends JFrame{
 				{"Gr\u00FCn", "Feld ist an der korrekten Stelle in der Liste"},
 				{"Rot", "Felder werden miteinander verglichen"},
 				{"Cyan", "Felder werden vertauscht"},
+				{"Pikachu rennt", "Es wird aktuell eine Liste sortiert"},
+				{"Pepe tanzt", "Aus Meme"},
 			},
 			new String[] {
 				"Feldfarbe", "Erkl\u00E4rung"
 			}
-		) {
-			private static final long serialVersionUID = 1L;
-			
-			Class[] columnTypes = new Class[] {
-				String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(92);
 		table.getColumnModel().getColumn(1).setResizable(false);
@@ -417,6 +409,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 //		Thread runtimeSort;
 		
 		btnStart.addActionListener(a -> {
+			pikaRun.setInterrupted(false);
 			resetListLabels();
 			setComponentsEnabled(false);
 			lblRuntime.setText("0 ms");
@@ -425,16 +418,23 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			
 			Thread worker = new Thread(() -> {
 				algo.sortVisualized(list);
-				setComponentsEnabled(true);
+				if(!runtimeSort.isAlive()){
+					setComponentsEnabled(true);
+					pikaRun.setInterrupted(true);
+				}
 			});
 			worker.start();
 			
-//			runtimeSort = new Thread(() -> {
-//				Comparable[] array = generateListWithSelectedSettings(100000);
-//				long[] data = algo.measureAlgorithm(array);
-//				setStatistics(data[1], data[2], data[0]);
-//			});
-//			runtimeSort.start();
+			runtimeSort = new Thread(() -> {
+				Comparable[] array = generateListWithSelectedSettings(100000);
+				long[] data = algo.measureAlgorithm(array);
+				setStatistics(data[1], data[2], data[0]);
+				if(!worker.isAlive()){
+					setComponentsEnabled(true);
+					pikaRun.setInterrupted(true);
+				}
+			});
+			runtimeSort.start();
 		});
 		
 		for(int i = 0; i < labels.length; i++){

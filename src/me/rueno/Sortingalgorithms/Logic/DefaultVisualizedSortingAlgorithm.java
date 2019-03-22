@@ -43,6 +43,17 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		sleepAppropiateAmountOfTimeForCompare();
 	}
 	
+	public final void markIntervalAsSortedPopup(int min, int max){
+		for(int i = min; i <= max; i++){
+			labels[i].setBackground(Color.GREEN);
+		}
+		sleepAppropiateAmountOfTimeForCompare();
+		sleepAppropiateAmountOfTimeForCompare();
+		for(int i = min; i <= max; i++){
+			labels[i].setBackground(defaultBackground);
+		}
+	}
+	
 	@Override
 	public abstract <C extends Comparable<C>> void sortVisualized(C[] list);
 	

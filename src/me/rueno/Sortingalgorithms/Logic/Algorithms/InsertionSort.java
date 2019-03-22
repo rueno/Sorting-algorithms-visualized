@@ -26,7 +26,11 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 					j = 0;
 				}
 			}
+			markIntervalAsSortedPopup(0, i);
 			i++;
+		}
+		for(int i1 = 0; i1 < list.length; i1++){
+			markAsSorted(i1);
 		}
 	}
 	

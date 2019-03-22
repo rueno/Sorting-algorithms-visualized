@@ -37,7 +37,7 @@ public class ListGenerator{
 				}
 				break;
 		}
-		return list;	
+		return list;
 	}
 	
 	public Long[] generateLongList(int length, ListType type){

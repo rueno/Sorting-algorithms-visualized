@@ -27,9 +27,10 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 				j++;
 			}
 			swapVisualized(list, i, minIndex, 4);
-			
+			markAsSorted(i);
 			i++;
 		}
+		markAsSorted(i);
 	}
 	
 	@Override
