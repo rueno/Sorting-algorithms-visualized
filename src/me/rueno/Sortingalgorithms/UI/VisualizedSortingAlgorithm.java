@@ -133,7 +133,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		
 		JRadioButton rdbtnQuicksort = new JRadioButton("Quicksort");
 		rdbtnQuicksort.setFocusPainted(false);
-		rdbtnQuicksort.setBounds(95, 21, 71, 23);
+		rdbtnQuicksort.setBounds(95, 47, 71, 23);
 		rdbtnQuicksort.addActionListener(a -> {
 			algo = new QuickSort(labels);
 		});
@@ -141,20 +141,13 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		
 		JRadioButton rdbtnShellsort = new JRadioButton("Shellsort");
 		rdbtnShellsort.setFocusPainted(false);
-		rdbtnShellsort.setBounds(95, 47, 71, 23);
+		rdbtnShellsort.setBounds(95, 21, 71, 23);
 		rdbtnShellsort.addActionListener(a -> {
 			algo = new ShellSort(labels);
 		});
 		panel_AlgorithmRdbtns.add(rdbtnShellsort);
 		
-		JRadioButton rdbtnMergesort = new JRadioButton("Mergesort");
-		rdbtnMergesort.setEnabled(false);
-		rdbtnMergesort.setFocusPainted(false);
-		rdbtnMergesort.setBounds(95, 73, 75, 23);
-		panel_AlgorithmRdbtns.add(rdbtnMergesort);
-		
 		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnMergesort);
 		group.add(rdbtnShellsort);
 		group.add(rdbtnQuicksort);
 		group.add(rdbtnSelectionsort);

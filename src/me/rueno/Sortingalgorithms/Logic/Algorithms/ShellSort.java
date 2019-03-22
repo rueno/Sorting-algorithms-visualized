@@ -1,7 +1,5 @@
 package me.rueno.Sortingalgorithms.Logic.Algorithms;
 
-import java.util.Arrays;
-
 import javax.swing.JLabel;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
