@@ -28,6 +28,8 @@ public class CompareAlgosDialog extends JDialog{
 	
 	private static final long serialVersionUID = -5642464823449347982L;
 	
+	private JFreeChart chart;
+	
 	public CompareAlgosDialog(JFrame parent){
 		setLocationRelativeTo(null);
 		setModalityType(ModalityType.APPLICATION_MODAL);
@@ -36,15 +38,16 @@ public class CompareAlgosDialog extends JDialog{
 		
 		XYDataset set = createSet();
 		
-		JFreeChart chart = ChartFactory.createXYLineChart("Sortieralgorithmen im Vergleich (Liste mit zufälliger Anordnung)", "Anzahl Elemente",
+		chart = ChartFactory.createXYLineChart("Sortieralgorithmen im Vergleich (Liste mit zufälliger Anordnung)", "Anzahl Elemente",
 				"Benötigte Zeit in Sekunden", set, PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel panel = new ChartPanel(chart);
+		panel.setDisplayToolTips(true);
 		
 		XYPlot plot = chart.getXYPlot();
 		XYLineAndShapeRenderer render = new XYLineAndShapeRenderer();
 		render.setSeriesPaint(0, Color.RED);
 		render.setSeriesPaint(1, Color.BLUE);
-		render.setSeriesPaint(2, Color.PINK);
+		render.setSeriesPaint(2, Color.YELLOW);
 		render.setSeriesPaint(3, Color.GREEN);
 		render.setSeriesStroke(0, new BasicStroke(0.75F));
 		render.setSeriesStroke(1, new BasicStroke(0.75F));

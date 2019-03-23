@@ -204,6 +204,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 				setComponentsEnabled(false);
 				CompareAlgosDialog dia = new CompareAlgosDialog(VisualizedSortingAlgorithm.this);
 				progress.dispose();
+				dia.setLocationRelativeTo(VisualizedSortingAlgorithm.this);
 				dia.setVisible(true);
 				setComponentsEnabled(true);
 			});
@@ -388,31 +389,39 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		scrollPane.setBounds(10, 183, 446, 124);
 		panel_1.add(scrollPane);
 		
-		pikaRun = new PikaRun(184, 50);
-		pikaRun.setSize(184, 50);
-		pikaRun.setLocation(490, 257);
+		pikaRun = new PikaRun(65, 50);
+		pikaRun.setSize(65, 50);
+		pikaRun.setLocation(609, 96);
 		panel_1.add(pikaRun);
 		pikaRun.setInterrupted(true);
 		
 		table = new JTable();
 		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Gr\u00FCn", "Feld ist an der korrekten Stelle in der Liste"},
-				{"Rot", "Felder werden miteinander verglichen"},
-				{"Cyan", "Felder werden vertauscht"},
-				{"Pikachu rennt", "Es wird aktuell eine Liste sortiert"},
-				{"Pepe tanzt", "Aus Meme"},
-			},
-			new String[] {
-				"Feldfarbe", "Erkl\u00E4rung"
+		table.setModel(new DefaultTableModel() {
+			
+			private static final long serialVersionUID = -7970629728981438850L;
+			
+			@Override
+			public boolean isCellEditable(int row, int column){
+				return false;
 			}
-		));
+			
+		});
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.addColumn("Feldfarbe/Aktion");
+		model.addColumn("Bedeutung");
+		model.addRow(new String[] {" Grün",				" Feld ist an der korrekten Stelle in der Liste"});
+		model.addRow(new String[] {" Rot",				" Felder werden miteinander verglichen"});
+		model.addRow(new String[] {" Cyan",				" Felder werden vertauscht"});
+		model.addRow(new String[] {" Pikachu rennt",	" Es wird aktuell eine Liste sortiert"});
+		model.addRow(new String[] {" Pepe tanzt",		" Aus Meme"});
+		
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(92);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(266);
+		
 		table.setRowSelectionAllowed(false);
 		
 		labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
