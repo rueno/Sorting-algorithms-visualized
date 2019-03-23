@@ -39,6 +39,7 @@ public class CompareAlgosDialog extends JDialog{
 		JFreeChart chart = ChartFactory.createXYLineChart("Sortieralgorithmen im Vergleich (Liste mit zufälliger Anordnung)", "Anzahl Elemente",
 				"Benötigte Zeit in Sekunden", set, PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel panel = new ChartPanel(chart);
+		
 		XYPlot plot = chart.getXYPlot();
 		XYLineAndShapeRenderer render = new XYLineAndShapeRenderer();
 		render.setSeriesPaint(0, Color.RED);
