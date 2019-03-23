@@ -17,6 +17,8 @@ import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
+import me.rueno.Sortingalgorithms.UI.Dialog.CompareAlgosDialog;
+import me.rueno.Sortingalgorithms.UI.Dialog.ProgressDialog;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -193,10 +195,22 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		btnListSortTypeInfo.setBounds(234, 17, 23, 23);
 		panelSettings.add(btnListSortTypeInfo);
 		
-		JButton btnOwnList = new JButton("Liste manuell eingeben");
-		btnOwnList.setFocusPainted(false);
-		btnOwnList.setBounds(303, 17, 141, 23);
-		panelSettings.add(btnOwnList);
+		JButton btnCompareAll = new JButton("Alle vergleichen");
+		btnCompareAll.setFocusPainted(false);
+		btnCompareAll.setBounds(303, 17, 141, 23);
+		btnCompareAll.addActionListener(a -> {
+			ProgressDialog progress = new ProgressDialog(VisualizedSortingAlgorithm.this);
+			Thread worker = new Thread(() -> {
+				setComponentsEnabled(false);
+				CompareAlgosDialog dia = new CompareAlgosDialog(VisualizedSortingAlgorithm.this);
+				progress.dispose();
+				dia.setVisible(true);
+				setComponentsEnabled(true);
+			});
+			worker.start();
+			progress.setVisible(true);
+		});
+		panelSettings.add(btnCompareAll);
 		
 		JButton btnConfirm = new JButton("Generieren");
 		btnConfirm.setFocusPainted(false);
@@ -325,6 +339,9 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		JButton btnIntelAboutProcedure = new JButton("Infos zum Verfahren");
 		btnIntelAboutProcedure.setFocusPainted(false);
 		btnIntelAboutProcedure.setBounds(540, 11, 134, 23);
+		btnIntelAboutProcedure.addActionListener(a -> {
+			
+		});
 		panel_1.add(btnIntelAboutProcedure);
 		
 		JSeparator separator_1 = new JSeparator();
