@@ -16,4 +16,5 @@ public class Main{
 		VisualizedSortingAlgorithm ui = new VisualizedSortingAlgorithm();
 		ui.setVisible(true);
 	}
+	
 }

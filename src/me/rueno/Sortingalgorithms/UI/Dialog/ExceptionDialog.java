@@ -57,7 +57,6 @@ public class ExceptionDialog extends JDialog{
 		
 		JLabel lblPikachu = new JLabel();
 		lblPikachu.setBounds(379, 11, 150, 150);
-//		lblPikachu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		lblPikachu.setIcon(new ImageIcon(new ImageIcon(ExceptionDialog.class.getResource("/resources/images/pikachuO.png")).getImage().getScaledInstance(lblPikachu.getWidth(),
 				lblPikachu.getHeight(), Image.SCALE_SMOOTH)));
 		content.add(lblPikachu);
