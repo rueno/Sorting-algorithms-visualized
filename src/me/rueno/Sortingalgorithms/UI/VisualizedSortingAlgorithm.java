@@ -66,7 +66,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private AnimatedImageLabel pikaRun;
 	private JTable table;
 	
-	private Thread runtimeSort;
+	private Thread runtimeSort, visualizedSorter;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
@@ -149,12 +149,21 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		});
 		panel_AlgorithmRdbtns.add(rdbtnShellsort);
 		
+		JRadioButton rdbtnBogosort = new JRadioButton("Bogosort");
+		rdbtnBogosort.setFocusPainted(false);
+		rdbtnBogosort.setBounds(95, 73, 71, 23);
+		rdbtnBogosort.addActionListener(a -> {
+			algo = new BogoSort(labels);
+		});
+		panel_AlgorithmRdbtns.add(rdbtnBogosort);
+		
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnShellsort);
 		group.add(rdbtnQuicksort);
 		group.add(rdbtnSelectionsort);
 		group.add(rdbtnInsertionsort);
 		group.add(rdbtnBubblesort);
+		group.add(rdbtnBogosort);
 		
 		panelSettings = new JPanel();
 		panelSettings.setBorder(new TitledBorder(null, "Listeneinstellungen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -437,20 +446,20 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			lblResaves.setText("0");
 			lblComparations.setText("0");
 			
-			Thread worker = new Thread(() -> {
+			visualizedSorter = new Thread(() -> {
 				algo.sortVisualized(list);
 				if(!runtimeSort.isAlive()){
 					setComponentsEnabled(true);
 					pikaRun.setInterrupted(true);
 				}
 			});
-			worker.start();
+			visualizedSorter.start();
 			
 			runtimeSort = new Thread(() -> {
 				Comparable[] array = generateListWithSelectedSettings(100000);
 				long[] data = algo.measureAlgorithm(array);
 				setStatistics(data[1], data[2], data[0]);
-				if(!worker.isAlive()){
+				if(!visualizedSorter.isAlive()){
 					setComponentsEnabled(true);
 					pikaRun.setInterrupted(true);
 				}
