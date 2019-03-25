@@ -41,6 +41,10 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		return true;
 	}
 	
+	protected final boolean shouldInterrupt(){
+		return Thread.currentThread().isInterrupted();
+	}
+	
 	@Override
 	public abstract String getAlgorithmInfoText();
 	

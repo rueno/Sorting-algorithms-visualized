@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 import me.rueno.Sortingalgorithms.Logic.Algorithms.*;
 import me.rueno.Sortingalgorithms.Misc.GlobalVars;
+import me.rueno.Sortingalgorithms.Misc.InterruptableThread;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
@@ -67,6 +68,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private JTable table;
 	
 	private Thread runtimeSort, visualizedSorter;
+	private JButton btnCancel;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
@@ -363,35 +365,35 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		panel_1.add(lblLegende);
 		
 		JLabel lblStatistiken = new JLabel("Statistiken für Liste mit 100.000 Elementen:");
-		lblStatistiken.setBounds(462, 158, 212, 14);
+		lblStatistiken.setBounds(462, 184, 212, 14);
 		panel_1.add(lblStatistiken);
 		
 		JLabel lblUmspeicherungen = new JLabel("Umspeicherungen:");
-		lblUmspeicherungen.setBounds(490, 183, 90, 14);
+		lblUmspeicherungen.setBounds(490, 209, 90, 14);
 		panel_1.add(lblUmspeicherungen);
 		
 		JLabel lblVergleiche = new JLabel("Vergleiche:");
-		lblVergleiche.setBounds(490, 208, 90, 14);
+		lblVergleiche.setBounds(490, 234, 90, 14);
 		panel_1.add(lblVergleiche);
 		
 		JLabel lblLaufzeit = new JLabel("Laufzeit:");
 		lblLaufzeit.setToolTipText("");
-		lblLaufzeit.setBounds(490, 233, 90, 14);
+		lblLaufzeit.setBounds(490, 259, 90, 14);
 		panel_1.add(lblLaufzeit);
 		
 		lblResaves = new JLabel("0");
 		lblResaves.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblResaves.setBounds(590, 183, 84, 14);
+		lblResaves.setBounds(590, 209, 84, 14);
 		panel_1.add(lblResaves);
 		
 		lblComparations = new JLabel("0");
 		lblComparations.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblComparations.setBounds(590, 208, 84, 14);
+		lblComparations.setBounds(590, 234, 84, 14);
 		panel_1.add(lblComparations);
 		
 		lblRuntime = new JLabel("0 ms");
 		lblRuntime.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRuntime.setBounds(590, 233, 84, 14);
+		lblRuntime.setBounds(590, 259, 84, 14);
 		panel_1.add(lblRuntime);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -433,6 +435,20 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		
 		table.setRowSelectionAllowed(false);
 		
+		btnCancel = new JButton("Abbrechen");
+		btnCancel.setEnabled(false);
+		btnCancel.setFocusPainted(false);
+		btnCancel.setBounds(590, 284, 89, 23);
+		btnCancel.addActionListener(a -> {
+			if(visualizedSorter != null && visualizedSorter.isAlive()){
+				visualizedSorter.interrupt();
+			}
+			if(runtimeSort != null && runtimeSort.isAlive()){
+				runtimeSort.interrupt();
+			}
+		});
+		panel_1.add(btnCancel);
+		
 		labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
 		list = gen.generateIntegerList(labels.length, ListType.RANDOM);
 		
@@ -446,7 +462,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			lblResaves.setText("0");
 			lblComparations.setText("0");
 			
-			visualizedSorter = new Thread(() -> {
+			visualizedSorter = new InterruptableThread(() -> {
 				algo.sortVisualized(list);
 				if(!runtimeSort.isAlive()){
 					setComponentsEnabled(true);
@@ -455,7 +471,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			});
 			visualizedSorter.start();
 			
-			runtimeSort = new Thread(() -> {
+			runtimeSort = new InterruptableThread(() -> {
 				Comparable[] array = generateListWithSelectedSettings(100000);
 				long[] data = algo.measureAlgorithm(array);
 				setStatistics(data[1], data[2], data[0]);
@@ -510,6 +526,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	
 	private void setComponentsEnabled(boolean enabled){
 		btnStart.setEnabled(enabled);
+		btnCancel.setEnabled(!enabled);
+		
 		for(Component comp: panel_AlgorithmRdbtns.getComponents()){
 			comp.setEnabled(enabled);
 		}

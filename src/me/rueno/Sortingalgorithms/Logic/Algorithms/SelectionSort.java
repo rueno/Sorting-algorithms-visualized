@@ -16,12 +16,12 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 		int minIndex;
 		int i = 0;
 		
-		while(i < (n-1)){
+		while(i < (n-1) && !shouldInterrupt()){
 			int j = i + 1;
 			minIndex = i;
 			
-			while(j < n){
-				if(compareVisualized(list, j, minIndex, 4) < 0){
+			while(j < n && !shouldInterrupt()){
+				if(compareVisualized(list, j, minIndex, 4) < 0 && !shouldInterrupt()){
 					minIndex = j;
 				}
 				j++;
@@ -42,12 +42,12 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 		int i = 0;
 		int j;
 		
-		while(i < (n-1)){ comparations++;
+		while(i < (n-1) && !shouldInterrupt()){ comparations++;
 			j = i + 1; resaves++;
 			minIndex = i; resaves++;
 			
-			while(j < n){ comparations++;
-				if(list[j].compareTo(list[minIndex]) < 0){ comparations++;
+			while(j < n && !shouldInterrupt()){ comparations++;
+				if(list[j].compareTo(list[minIndex]) < 0 && !shouldInterrupt()){ comparations++;
 					minIndex = j; resaves++;
 				}
 				j++; resaves++;

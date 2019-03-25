@@ -16,10 +16,10 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 		int i = 1;
 		int j;
 		
-		while(i < n){
+		while(i < n && !shouldInterrupt()){
 			j = i;
-			while(j > 0){
-				if(compareVisualized(list, j, j-1, 4) < 0){
+			while(j > 0 && !shouldInterrupt()){
+				if(compareVisualized(list, j, j-1, 4) < 0 && !shouldInterrupt()){
 					swapVisualized(list, j, j-1, 4);
 					j--;
 				}else{
@@ -29,7 +29,7 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 			markIntervalAsSortedPopup(0, i);
 			i++;
 		}
-		for(int i1 = 0; i1 < list.length; i1++){
+		for(int i1 = 0; i1 < list.length && !shouldInterrupt(); i1++){
 			markAsSorted(i1);
 		}
 	}
@@ -40,10 +40,10 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 		int n = list.length;
 		int i = 1;
 		int j;
-		while(i < n){ comparations++;
+		while(i < n && !shouldInterrupt()){ comparations++;
 			j = i; resaves++;
-			while(j > 0){ comparations++;
-				if(list[j].compareTo(list[j-1]) < 0){ comparations++;
+			while(j > 0 && !shouldInterrupt()){ comparations++;
+				if(list[j].compareTo(list[j-1]) < 0 && !shouldInterrupt()){ comparations++;
 					swap(list, j, j-1); resaves += 3;
 					j--; resaves++;
 				}else {
