@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
+import me.rueno.Sortingalgorithms.Logic.ISortingAlgorithm;
 import me.rueno.Sortingalgorithms.Logic.Algorithms.*;
 import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 import me.rueno.Sortingalgorithms.Misc.InterruptableThread;
@@ -19,7 +20,7 @@ import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
 import me.rueno.Sortingalgorithms.UI.Dialog.CompareAlgosDialog;
-import me.rueno.Sortingalgorithms.UI.Dialog.ProgressDialog;
+import me.rueno.Sortingalgorithms.UI.Dialog.SelectAlgosForComparasionDialog;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -210,17 +211,22 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		btnCompareAll.setFocusPainted(false);
 		btnCompareAll.setBounds(303, 17, 141, 23);
 		btnCompareAll.addActionListener(a -> {
-			ProgressDialog progress = new ProgressDialog(VisualizedSortingAlgorithm.this);
-			Thread worker = new Thread(() -> {
-				setComponentsEnabled(false);
-				CompareAlgosDialog dia = new CompareAlgosDialog(VisualizedSortingAlgorithm.this);
-				progress.dispose();
-				dia.setLocationRelativeTo(VisualizedSortingAlgorithm.this);
-				dia.setVisible(true);
-				setComponentsEnabled(true);
-			});
-			worker.start();
-			progress.setVisible(true);
+			
+			SelectAlgosForComparasionDialog dialog = new SelectAlgosForComparasionDialog(VisualizedSortingAlgorithm.this);
+			dialog.setVisible(true);
+			
+			ISortingAlgorithm[] result = dialog.getResult();
+			
+			if(result != null && result.length > 0){
+				Thread worker = new Thread(() -> {
+					setComponentsEnabled(false);
+					CompareAlgosDialog dia = new CompareAlgosDialog(VisualizedSortingAlgorithm.this, result);
+					dia.setLocationRelativeTo(VisualizedSortingAlgorithm.this);
+					dia.setVisible(true);
+					setComponentsEnabled(true);
+				});
+				worker.start();
+			}
 		});
 		panelSettings.add(btnCompareAll);
 		

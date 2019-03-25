@@ -10,6 +10,10 @@ public class BogoSort extends DefaultVisualizedSortingAlgorithm{
 	
 	private Random random;
 	
+	public BogoSort(){
+		this(null);
+	}
+	
 	public BogoSort(JLabel[] lbls){
 		super(lbls);
 		this.random = new Random();

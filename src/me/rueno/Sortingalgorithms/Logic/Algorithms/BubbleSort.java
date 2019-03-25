@@ -6,6 +6,10 @@ import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 
 public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 	
+	public BubbleSort(){
+		this(null);
+	}
+	
 	public BubbleSort(JLabel[] labels){
 		super(labels);
 	}

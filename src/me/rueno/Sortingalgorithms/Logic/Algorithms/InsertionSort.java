@@ -6,6 +6,10 @@ import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 
 public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 	
+	public InsertionSort(){
+		super(null);
+	}
+	
 	public InsertionSort(JLabel[] labels){
 		super(labels);
 	}

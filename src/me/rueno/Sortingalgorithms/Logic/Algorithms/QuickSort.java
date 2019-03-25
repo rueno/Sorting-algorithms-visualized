@@ -6,6 +6,10 @@ import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 
 public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	
+	public QuickSort(){
+		this(null);
+	}
+	
 	public QuickSort(JLabel[] labels){
 		super(labels);
 	}

@@ -6,6 +6,10 @@ import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 
 public class ShellSort extends DefaultVisualizedSortingAlgorithm{
 	
+	public ShellSort(){
+		this(null);
+	}
+	
 	public ShellSort(JLabel[] panels){
 		super(panels);
 	}
