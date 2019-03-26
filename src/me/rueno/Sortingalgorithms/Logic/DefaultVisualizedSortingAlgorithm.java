@@ -52,6 +52,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	public final <C extends Comparable<C>> long[] measureAlgorithm(C[] list) {
 		long start = System.currentTimeMillis();
 		long[] sort = sort(list);
+		if(!isSorted(list)) System.out.println("FEHLER BEIM SORTIEREN MIT " + getName() + "!");
 		return new long[] { (System.currentTimeMillis() - start), sort[0], sort[1] };
 	}
 	

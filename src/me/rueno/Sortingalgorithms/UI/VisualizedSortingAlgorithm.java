@@ -2,6 +2,7 @@ package me.rueno.Sortingalgorithms.UI;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +20,7 @@ import me.rueno.Sortingalgorithms.Misc.InterruptableThread;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
+import me.rueno.Sortingalgorithms.UI.Dialog.AboutSortingAlgorithmDialog;
 import me.rueno.Sortingalgorithms.UI.Dialog.CompareAlgosDialog;
 import me.rueno.Sortingalgorithms.UI.Dialog.SelectAlgosForComparasionDialog;
 
@@ -200,11 +202,26 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		btnListTypeInfo.setFocusPainted(false);
 		btnListTypeInfo.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnListTypeInfo.setBounds(234, 42, 23, 23);
+		btnListTypeInfo.addActionListener(a -> {
+			showDialog("Information", "Es gibt mehrere Objekttypen, die mithilfe dieser Software sortiert werden können:\n"
+					+ "Integer:  Eine normale ganze Zahl. In diesem Projekt hat der Integer eine Range von -9999 bis 10.000\n"
+					+ "Long: Ähnlich des Integers. Gleiche Zahlenrange. Kann theoretisch größere Zahlen annehmen, in dieser Software ist die Range jedoch beschränkt.\n"
+					+ "Float: Eine Kommazahl. In dieser Software mit maximal 2 Vorkomma und maximal 2 Nachkommastellen.\n"
+					+ "Double: Funktion in dieser Software ist gleich des Floats. \n"
+					+ "String: Eine Zeichenkette mit einer Länge von maximal 6 Zeichen, zufällig zusammengesetzt. Existiert um eine Besonderheit der java'schen Strings zu zeigen:\n"
+					+ "Strings werden sortiert, indem zuerst alle Großbuchstaben und danach alle Kleinbuchstaben sortiert in eine Reihe gebracht werden.");
+		});
 		panelSettings.add(btnListTypeInfo);
 		
 		JButton btnListSortTypeInfo = new JButton("?");
 		btnListSortTypeInfo.setFocusPainted(false);
 		btnListSortTypeInfo.setBounds(234, 17, 23, 23);
+		btnListSortTypeInfo.addActionListener(a -> {
+			showDialog("Information", "Es gibt 3 Listtypen:\n"
+					+ "Zufällig sortierte Liste, die Elemente sind zufällig sortiert angeordnet.\n"
+					+ "Aufsteigend sortierte Liste, die Elemente sind von klein nach groß angeordnet.\n"
+					+ "Absteigend sortierte Liste, die Elemente sind von groß nach klein angeordnet.");
+		});
 		panelSettings.add(btnListSortTypeInfo);
 		
 		JButton btnCompareAll = new JButton("Alle vergleichen");
@@ -358,7 +375,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		btnIntelAboutProcedure.setFocusPainted(false);
 		btnIntelAboutProcedure.setBounds(540, 11, 134, 23);
 		btnIntelAboutProcedure.addActionListener(a -> {
-			
+			AboutSortingAlgorithmDialog dialog = new AboutSortingAlgorithmDialog(VisualizedSortingAlgorithm.this, algo);
+			dialog.setVisible(true);
 		});
 		panel_1.add(btnIntelAboutProcedure);
 		
@@ -528,6 +546,10 @@ public class VisualizedSortingAlgorithm extends JFrame{
 				break;
 		}
 		return null;
+	}
+	
+	private void showDialog(String title, String text){
+		JOptionPane.showMessageDialog(this, text, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	private void setComponentsEnabled(boolean enabled){

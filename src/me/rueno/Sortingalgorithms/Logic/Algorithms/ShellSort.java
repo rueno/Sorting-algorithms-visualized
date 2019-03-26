@@ -50,9 +50,8 @@ public class ShellSort extends DefaultVisualizedSortingAlgorithm{
 	}
 
 	@Override
-	public String getAlgorithmInfoText() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAlgorithmInfoText(){
+		return "";
 	}
 	
 }

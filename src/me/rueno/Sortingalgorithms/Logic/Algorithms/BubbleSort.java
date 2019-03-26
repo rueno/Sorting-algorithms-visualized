@@ -56,7 +56,19 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	public String getAlgorithmInfoText(){
-		return getName();
+		return "<html>"
+				+ "<h2 style=\"text-align:center;\">Bubblesort</h2>"
+				+ "<p style=\"text-align:justify;\">Der Bubblesort (Sortieren durch Auf- bzw. Absteigen) sortiert eine Liste durch Vergleichen und Tauschen."
+				+ " Der Algorithmus eignet sich besonders zum demonstrieren und zum Einstieg in Sortieralgorithmen, da er sehr "
+				+ "leicht zu verstehen ist. In "
+				+ "der Praxis wird der Bubblesort eigentlich nicht eingesetzt, da der Bubblesort im Vergleich zu anderen Sortier"
+				+ "verfahren (zum Beispiel QuickSort oder MergeSort) sehr zeitaufwendig ist.</p>"
+				+ "<br><br>"
+				+ "<h3>Laufzeiten</h3>"
+				+ "<p>Worst-Case: O(n²)<br>"
+				+ "Average-Case: O(n²)<br>"
+				+ "</p>"
+				+ "</html>";
 	}
 	
 }

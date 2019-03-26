@@ -42,7 +42,21 @@ public class BogoSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	public String getAlgorithmInfoText(){
-		return "";
+		return "<html>"
+				+ "<h2 style=\"text-align:center;\">Bogosort</h2>"
+				+ "<p style=\"text-align:justify;\">Der Bogosort (Sortieren durch Zufall) sortiert eine Liste überprüfen auf Sortiertheit und vertauschen von zwei "
+				+ " zufälligen Elementen."
+				+ " Der Algorithmus existiert, um die Komplexität von Laufzeitanalysen und schlechten Algorithmen zu verde"
+				+ "utlichen. In der Praxis wird der Bogosort eigentlich nicht eingesetzt, da der Bogosort im Vergleich zu anderen Sortier"
+				+ "verfahren (zum Beispiel QuickSort oder MergeSort) sehr zeitaufwendig ist. Die Laufzeiten zu errechnen ist eigentlich unmöglich, da"
+				+ " durch zufälliges Tauschen von zwei Elementen theoretisch eine Laufzeit von undendlich Zeit benötigt werden kann. Da der Algorithmus zufällig sortiert, "
+				+ "Gibt es keinen Worst-Case und keinen Average-Case. Der Best-Case ist eine bereits sortierte Liste, da der Algorithmus sofort erkennt, das diese bereits in "
+				+ "sortierter Form vorliegt und so nichts weiter sortieren muss.</p>"
+				+ "<br><br>"
+				+ "<h3>Laufzeiten</h3>"
+				+ "Sind unmöglich zu ermitteln"
+				+ "</p>"
+				+ "</html>";
 	}
 
 	@Override

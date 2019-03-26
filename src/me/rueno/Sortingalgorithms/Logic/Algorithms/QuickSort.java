@@ -29,8 +29,6 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		while(i <= j && !shouldInterrupt()){
 			while(compareVisualized(list, i, indexOf(list, pivot), 4) < 0 && !shouldInterrupt()) i++;
 			while(compareVisualized(list, j, indexOf(list, pivot), 4) > 0 && !shouldInterrupt()) j--;
-//			while(list[i].compareTo(pivot) < 0) i++;
-//			while(list[j].compareTo(pivot) > 0) j--;
 			
 			if(i <= j && !shouldInterrupt()){
 				swapVisualized(list, i, j, 4);
@@ -93,7 +91,19 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	public String getAlgorithmInfoText(){
-		return getName();
+		return "<html>"
+				+ "<h2 style=\"text-align:center;\">Quicksort</h2>"
+				+ "<p style=\"text-align:justify;\">Der Quicksort ist ein rekursiver Algorithmus und sortiert eine Liste indem er "
+				+ "das Divide-and-Conquer-Verfahren anwendet. "
+				+ " Dieser Algorithmus ist im Vergleich zu einfach zu impelementierenden Algorithmen (z. B. SelectionSort oder Bubblesort)"
+				+ " recht schnell, ist jedoch auch vergleichsweise komplex und dadurch nur schwer zu implementieren. Der Quicksort wird in der"
+				+ " Realität relativ häufig eingesetzt, da er eben sehr schnell undsortiere Listen sortieren kann.</p>"
+				+ "<br><br>"
+				+ "<h3>Laufzeiten</h3>"
+				+ "Average-Case: O(n*log(n))<br>"
+				+ "Worst-Case: O(n²)"
+				+ "</p>"
+				+ "</html>";
 	}
 	
 }

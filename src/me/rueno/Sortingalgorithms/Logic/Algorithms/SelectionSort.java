@@ -65,7 +65,20 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	public String getAlgorithmInfoText(){
-		return getName();
+		return "<html>"
+				+ "<h2 style=\"text-align:center;\">Selectionsort</h2>"
+				+ "<p style=\"text-align:justify;\">Der Selectionsort (Sortieren durch Auswählen, alternativ auch"
+				+ " Maxsort, Minsort, Selecsort oder Exchancesort genannt) sortiert eine Liste, indem er sich immer das nächst kleine Element"
+				+ " aus der Liste raussucht (auswählt) und dieses anschließend an die korrekte Stelle der Liste tauscht."
+				+ " Dieser Algorithmus ist vergleichsweise einfach zu implementieren aber nicht allzu effizient. "
+				+ "In der Praxis wird der Selectionsort eigentlich nicht eingesetzt, da er im Vergleich zu anderen Sortier"
+				+ "verfahren (zum Beispiel QuickSort oder MergeSort) sehr zeitaufwendig ist. </p>"
+				+ "<br><br>"
+				+ "<h3>Laufzeiten</h3>"
+				+ "Average-Case: O(n²)<br>"
+				+ "Worst-Case: O(n²)"
+				+ "</p>"
+				+ "</html>";
 	}
 	
 }

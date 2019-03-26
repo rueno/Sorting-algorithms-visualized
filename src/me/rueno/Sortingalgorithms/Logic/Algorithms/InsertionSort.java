@@ -61,7 +61,19 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	public String getAlgorithmInfoText(){
-		return getName();
+		return "<html>"
+				+ "<h2 style=\"text-align:center;\">Insertionsort</h2>"
+				+ "<p style=\"text-align:justify;\">Der Insertionsort (Sortieren durch Einfügen) sortiert eine Liste, indem er ein Element aus der unsortierten Teilliste entnimmt,"
+				+ "und an der korrekten Stelle in der sortierten Teilliste einfügt. "
+				+ " Dieser Algorithmus ist vergleichsweise einfach zu implementieren und bei bereits sortierten Listen relativ effizient. "
+				+ "In der Praxis wird der Insertionsort eigentlich nicht eingesetzt, da er im Vergleich zu anderen Sortier"
+				+ "verfahren (zum Beispiel QuickSort oder MergeSort) dennoch sehr zeitaufwendig ist. </p>"
+				+ "<br><br>"
+				+ "<h3>Laufzeiten</h3>"
+				+ "Average-Case: O(n²)<br>"
+				+ "Worst-Case: O(n²)"
+				+ "</p>"
+				+ "</html>";
 	}
 	
 }
