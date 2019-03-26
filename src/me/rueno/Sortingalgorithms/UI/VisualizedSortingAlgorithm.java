@@ -238,7 +238,6 @@ public class VisualizedSortingAlgorithm extends JFrame{
 				Thread worker = new Thread(() -> {
 					setComponentsEnabled(false);
 					CompareAlgosDialog dia = new CompareAlgosDialog(VisualizedSortingAlgorithm.this, result);
-					dia.setLocationRelativeTo(VisualizedSortingAlgorithm.this);
 					dia.setVisible(true);
 					setComponentsEnabled(true);
 				});

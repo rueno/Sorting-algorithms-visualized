@@ -50,10 +50,10 @@ public class CompareAlgosDialog extends JDialog{
 		this.algoColorMap.put("ShellSort", Color.ORANGE);
 		this.algoColorMap.put("BogoSort", Color.BLACK);
 		
+		setSize(657, 436);
 		setLocationRelativeTo(null);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Algorithmen im Vergleich");
-		setSize(657, 436);
 		
 		JPanel contentPanel = new JPanel();
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
