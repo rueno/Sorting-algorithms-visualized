@@ -20,6 +20,7 @@ import me.rueno.Sortingalgorithms.Misc.InterruptableThread;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
+import me.rueno.Sortingalgorithms.UI.Dialog.AboutProgramDialog;
 import me.rueno.Sortingalgorithms.UI.Dialog.AboutSortingAlgorithmDialog;
 import me.rueno.Sortingalgorithms.UI.Dialog.CompareAlgosDialog;
 import me.rueno.Sortingalgorithms.UI.Dialog.SelectAlgosForComparasionDialog;
@@ -484,7 +485,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		JMenuItem menuItemAbout = new JMenuItem("Über diese Software...");
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		menuItemAbout.addActionListener(a -> {
-			//TODO
+			AboutProgramDialog dialog = new AboutProgramDialog(VisualizedSortingAlgorithm.this);
+			dialog.setVisible(true);
 		});
 		menuHelp.add(menuItemAbout);
 	}

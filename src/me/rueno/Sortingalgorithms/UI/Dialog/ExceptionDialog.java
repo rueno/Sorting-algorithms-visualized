@@ -77,5 +77,6 @@ public class ExceptionDialog extends JDialog{
 			textAreaException.append("at " + element.toString() + "\n");
 		}
 		
+		setVisible(true);
 	}
 }
