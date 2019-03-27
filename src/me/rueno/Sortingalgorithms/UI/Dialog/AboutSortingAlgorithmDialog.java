@@ -15,12 +15,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ScrollPaneConstants;
+import java.awt.Toolkit;
 
 public class AboutSortingAlgorithmDialog extends JDialog{
 	
 	private static final long serialVersionUID = 8754615513631930628L;
 	
 	public AboutSortingAlgorithmDialog(JFrame parent, ISortingAlgorithm algo){
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AboutSortingAlgorithmDialog.class.getResource("/resources/images/icons/icon_Info.png")));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Über den " + algo.getName());
 		setResizable(false);
@@ -54,7 +56,7 @@ public class AboutSortingAlgorithmDialog extends JDialog{
 		textPane.setEditable(false);
 		textPane.setHighlighter(null);
 		textPane.setText(algo.getAlgorithmInfoText());
-		textPane.setBackground(SystemColor.menu);
+//		textPane.setBackground(SystemColor.menu);
 		scrollPane.setViewportView(textPane);
 		
 	}

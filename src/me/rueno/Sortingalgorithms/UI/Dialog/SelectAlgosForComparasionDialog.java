@@ -15,6 +15,7 @@ import java.awt.SystemColor;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import java.awt.Toolkit;
 
 public class SelectAlgosForComparasionDialog extends JDialog{
 	
@@ -24,6 +25,7 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 	private boolean canceled;
 	
 	public SelectAlgosForComparasionDialog(JFrame parent){
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SelectAlgosForComparasionDialog.class.getResource("/resources/images/icons/icon_Diagramm.png")));
 		this.canceled = true;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

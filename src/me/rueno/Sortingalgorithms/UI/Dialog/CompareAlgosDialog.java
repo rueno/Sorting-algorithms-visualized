@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 public class CompareAlgosDialog extends JDialog{
 	
@@ -41,6 +42,7 @@ public class CompareAlgosDialog extends JDialog{
 	private JButton btnCancel;
 	
 	public CompareAlgosDialog(JFrame parent, ISortingAlgorithm... algorithms){
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CompareAlgosDialog.class.getResource("/resources/images/icons/icon_Diagramm.png")));
 		this.algoColorMap = new HashMap<String, Color>();
 		
 		this.algoColorMap.put("QuickSort", Color.RED);

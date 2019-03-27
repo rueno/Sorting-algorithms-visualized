@@ -51,6 +51,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
+import java.awt.Toolkit;
 
 public class VisualizedSortingAlgorithm extends JFrame{
 	
@@ -81,6 +82,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VisualizedSortingAlgorithm.class.getResource("/resources/images/icons/icon_Algo.png")));
 		this.defaultBackground = UIManager.getColor("panel.background");
 		addWindowListener(new WindowAdapter(){
 			
