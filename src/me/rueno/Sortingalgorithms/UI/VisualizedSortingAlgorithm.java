@@ -45,6 +45,12 @@ import java.awt.event.WindowAdapter;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class VisualizedSortingAlgorithm extends JFrame{
 	
@@ -95,7 +101,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		this.nf = NumberFormat.getInstance(Locale.GERMANY);
 		
 		setTitle("Sortieralgorithmen (visualisiert)");
-		setSize(720, 606);
+		setSize(720, 620);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -456,6 +462,29 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		});
 		
 		this.algo = new BubbleSort(labels);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu menuFile = new JMenu("Datei");
+		menuBar.add(menuFile);
+		
+		JMenuItem menuItemQuit = new JMenuItem("Beenden");
+		menuItemQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+		menuItemQuit.addActionListener(a -> {
+			System.exit(0);
+		});
+		menuFile.add(menuItemQuit);
+		
+		JMenu menuHelp = new JMenu("Hilfe");
+		menuBar.add(menuHelp);
+		
+		JMenuItem menuItemAbout = new JMenuItem("Über diese Software...");
+		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		menuItemAbout.addActionListener(a -> {
+			//TODO
+		});
+		menuHelp.add(menuItemAbout);
 	}
 	
 	private void resetListLabels(){
