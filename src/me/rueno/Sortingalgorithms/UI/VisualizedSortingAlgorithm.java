@@ -275,65 +275,19 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel label_0 = new JLabel();
-		label_0.setHorizontalAlignment(SwingConstants.CENTER);
-		label_0.setBounds(40, 40, 40, 40);
-		panel_1.add(label_0);
+		this.labels = new JLabel[12];
+		list = gen.generateIntegerList(labels.length, ListType.RANDOM);
 		
-		JLabel label_1 = new JLabel();
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setBounds(90, 40, 40, 40);
-		panel_1.add(label_1);
-		
-		JLabel label_2 = new JLabel();
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setBounds(140, 40, 40, 40);
-		panel_1.add(label_2);
-		
-		JLabel label_3 = new JLabel();
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setBounds(190, 40, 40, 40);
-		panel_1.add(label_3);
-		
-		JLabel label_4 = new JLabel();
-		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setBounds(240, 40, 40, 40);
-		panel_1.add(label_4);
-		
-		JLabel label_5 = new JLabel();
-		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setBounds(290, 40, 40, 40);
-		panel_1.add(label_5);
-		
-		JLabel label_6 = new JLabel();
-		label_6.setHorizontalAlignment(SwingConstants.CENTER);
-		label_6.setBounds(340, 40, 40, 40);
-		panel_1.add(label_6);
-		
-		JLabel label_7 = new JLabel();
-		label_7.setHorizontalAlignment(SwingConstants.CENTER);
-		label_7.setBounds(390, 40, 40, 40);
-		panel_1.add(label_7);
-		
-		JLabel label_8 = new JLabel();
-		label_8.setHorizontalAlignment(SwingConstants.CENTER);
-		label_8.setBounds(440, 40, 40, 40);
-		panel_1.add(label_8);
-		
-		JLabel label_9 = new JLabel();
-		label_9.setHorizontalAlignment(SwingConstants.CENTER);
-		label_9.setBounds(490, 40, 40, 40);
-		panel_1.add(label_9);
-		
-		JLabel label_10 = new JLabel();
-		label_10.setHorizontalAlignment(SwingConstants.CENTER);
-		label_10.setBounds(540, 40, 40, 40);
-		panel_1.add(label_10);
-		
-		JLabel label_11 = new JLabel();
-		label_11.setHorizontalAlignment(SwingConstants.CENTER);
-		label_11.setBounds(590, 40, 40, 40);
-		panel_1.add(label_11);
+		for(int i = 0; i < 12; i++){
+			JLabel label = new JLabel("");
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+			label.setOpaque(true);
+			label.setBounds(40 + (i * 40) + (i * 10), 40, 40, 40);
+			panel_1.add(label);
+			label.setText(String.valueOf(list[i]));
+			labels[i] = label;
+		}
 		
 		JSlider sliderSpeedMultiplier = new JSlider();
 		sliderSpeedMultiplier.setSnapToTicks(true);
@@ -472,11 +426,6 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		});
 		panel_1.add(btnCancel);
 		
-		labels = new JLabel[] {label_0, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9, label_10, label_11};
-		list = gen.generateIntegerList(labels.length, ListType.RANDOM);
-		
-//		Thread runtimeSort;
-		
 		btnStart.addActionListener(a -> {
 			pikaRun.setInterrupted(false);
 			resetListLabels();
@@ -505,12 +454,6 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			});
 			runtimeSort.start();
 		});
-		
-		for(int i = 0; i < labels.length; i++){
-			labels[i].setOpaque(true);
-			labels[i].setText(list[i] + "");
-			labels[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		}
 		
 		this.algo = new BubbleSort(labels);
 	}
