@@ -22,7 +22,7 @@ public class AboutSortingAlgorithmDialog extends JDialog{
 	private static final long serialVersionUID = 8754615513631930628L;
 	
 	public AboutSortingAlgorithmDialog(JFrame parent, ISortingAlgorithm algo){
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AboutSortingAlgorithmDialog.class.getResource("/resources/images/icons/icon_Info.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AboutSortingAlgorithmDialog.class.getResource("/resources/images/icons/iconInfo.png")));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Über den " + algo.getName());
 		setResizable(false);

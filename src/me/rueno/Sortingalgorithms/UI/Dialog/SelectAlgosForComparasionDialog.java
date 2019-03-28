@@ -25,7 +25,7 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 	private boolean canceled;
 	
 	public SelectAlgosForComparasionDialog(JFrame parent){
-		setIconImage(Toolkit.getDefaultToolkit().getImage(SelectAlgosForComparasionDialog.class.getResource("/resources/images/icons/icon_Diagramm.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SelectAlgosForComparasionDialog.class.getResource("/resources/images/icons/iconDiagramm.png")));
 		this.canceled = true;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

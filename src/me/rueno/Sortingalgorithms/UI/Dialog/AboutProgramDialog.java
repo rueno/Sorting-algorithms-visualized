@@ -23,7 +23,7 @@ public class AboutProgramDialog extends JDialog{
 	
 	public AboutProgramDialog(JFrame parent){
 		Desktop desktop = Desktop.getDesktop();
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AboutProgramDialog.class.getResource("/resources/images/icons/icon_About.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AboutProgramDialog.class.getResource("/resources/images/icons/iconAbout.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);

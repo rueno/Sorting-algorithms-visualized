@@ -83,7 +83,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
-		setIconImage(Toolkit.getDefaultToolkit().getImage(VisualizedSortingAlgorithm.class.getResource("/resources/images/icons/icon_Algo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VisualizedSortingAlgorithm.class.getResource("/resources/images/icons/iconAlgo.png")));
 		this.defaultBackground = UIManager.getColor("panel.background");
 		addWindowListener(new WindowAdapter(){
 			
