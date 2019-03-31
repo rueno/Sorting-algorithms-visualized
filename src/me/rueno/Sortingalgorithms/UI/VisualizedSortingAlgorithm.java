@@ -434,6 +434,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			if(measure != null && !measure.isDone()){
 				measure.cancel(true);
 			}
+			algo.normalizeDisplay();
+			setComponentsEnabled(true);
 		});
 		panel_1.add(btnCancel);
 		
