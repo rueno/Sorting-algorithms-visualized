@@ -23,6 +23,21 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		this.labels = labels;
 	}
 	
+	@Override
+	public void normalizeDisplay(){
+		for(int i = 0; i < 12; i++){
+			labels[i].setLocation(40 + (i * 40) + (i * 10), 40);
+			labels[i].setBackground(defaultBackground);
+//			label.setHorizontalAlignment(SwingConstants.CENTER);
+//			label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+//			label.setOpaque(true);
+//			label.setBounds(40 + (i * 40) + (i * 10), 40, 40, 40);
+//			panel_1.add(label);
+//			label.setText(String.valueOf(list[i]));
+//			labels[i] = label;
+		}
+	}
+	
 	/**
 	 * @return new long[] {resaves, comparations};
 	 */
@@ -57,12 +72,12 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	}
 	
 	@Override
-	public final void markAsSorted(int posX){
+	public final void markAsSorted(int posX)  throws InterruptedException{
 		labels[posX].setBackground(Color.GREEN);
 		sleepAppropiateAmountOfTimeForCompare();
 	}
 	
-	public final void markIntervalAsSortedPopup(int min, int max){
+	public final void markIntervalAsSortedPopup(int min, int max)  throws InterruptedException{
 		for(int i = min; i <= max; i++){
 			labels[i].setBackground(Color.GREEN);
 		}
@@ -74,10 +89,10 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	}
 	
 	@Override
-	public abstract <C extends Comparable<C>> void sortVisualized(C[] list);
+	public abstract <C extends Comparable<C>> void sortVisualized(C[] list) throws InterruptedException;
 	
 	@Override
-	public final <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed){
+	public final <C extends Comparable<C>> void swapVisualized(C[] list, int posX, int posY, int currentSpeed)  throws InterruptedException{
 		if(posX == posY){
 			JLabel lbl = labels[posX];
 			lbl.setBackground(Color.CYAN);
@@ -134,7 +149,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 //			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
 //		}
 		
-		//Hinauf schieben (Fast �quivalent zu runter schieben, eventuell eine Mehtode anlegen?
+		//Hinauf schieben (Fast äquivalent zu runter schieben, eventuell eine Mehtode anlegen?
 		for(int currentYDeviation = (int) (panelX.getHeight() * 1.5D); currentYDeviation > 0; currentYDeviation -= currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() - currentSpeed);
 			panelY.setLocation(panelY.getX(), panelY.getY() - currentSpeed);
@@ -161,7 +176,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	 * Visualises a comparation. Equivalent to calling list[posX].compareTo(list[posY])
 	 */
 	@Override
-	public final <C extends Comparable<C>> int compareVisualized(C[] list, int posX, int posY, int speed){
+	public final <C extends Comparable<C>> int compareVisualized(C[] list, int posX, int posY, int speed) throws InterruptedException{
 		//Visualisieren
 		if(posX == posY) list[posX].compareTo(list[posY]);
 		labels[posX].setBackground(Color.RED);
@@ -175,28 +190,16 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		return list[posX].compareTo(list[posY]);
 	}
 	
-	private void sleepAppropiateAmountOfTimeForCompare(){
-		try{
-			Thread.sleep((long) (500 * (2 - GlobalVars.SPEED_MULTIPLIER)));
-		}catch(InterruptedException interrupted){
-			interrupted.printStackTrace();
-		}
+	private void sleepAppropiateAmountOfTimeForCompare() throws InterruptedException{
+		Thread.sleep((long) (500 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 	}
 	
-	private void sleepAfterStep(){
-		try{
-			Thread.sleep((long) (300 * (2 - GlobalVars.SPEED_MULTIPLIER)));
-		}catch(InterruptedException interrupted){
-			interrupted.printStackTrace();
-		}
+	private void sleepAfterStep() throws InterruptedException{
+		Thread.sleep((long) (300 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 	}
 	
-	private void sleepAppropiateAmountOfTimeForSwap(){
-		try{
-			Thread.sleep((long) (17 * (2 - GlobalVars.SPEED_MULTIPLIER)));
-		}catch(InterruptedException interrupted){
-			interrupted.printStackTrace();
-		}
+	private void sleepAppropiateAmountOfTimeForSwap() throws InterruptedException{
+		Thread.sleep((long) (17 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 	}
 	
 }

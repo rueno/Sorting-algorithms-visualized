@@ -102,13 +102,13 @@ public class ListGenerator{
 	}
 	
 	private String generateRandomString(int length){
-		int left = 97;
-		int right = 122;
+		int a = 97;
+		int z = 122;
 		
 		StringBuffer buffer = new StringBuffer("");
 		
 		for(int i = 0; i < length; i++){
-			char next = (char) ((int) genIntegerInRange(left, right));
+			char next = (char) ((int) genIntegerInRange(a, z));
 			next = (random.nextBoolean() ? Character.toUpperCase(next) : next);
 			buffer.append(next);
 		}

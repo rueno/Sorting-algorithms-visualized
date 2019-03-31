@@ -20,7 +20,7 @@ public class BogoSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list){
+	public <C extends Comparable<C>> void sortVisualized(C[] list) throws InterruptedException{
 		int a, b;
 		int n = list.length;
 		while(!isSortedVisualized(list) && !shouldInterrupt()){
@@ -31,7 +31,7 @@ public class BogoSort extends DefaultVisualizedSortingAlgorithm{
 		}
 	}
 	
-	private <C extends Comparable<C>> boolean isSortedVisualized(C[] list){
+	private <C extends Comparable<C>> boolean isSortedVisualized(C[] list) throws InterruptedException{
 		for(int i = 0; i < list.length-1 && !shouldInterrupt(); i++){
 			if(compareVisualized(list, i, i+1, 4) > 0){
 				return false;
