@@ -3,6 +3,7 @@ package me.rueno.Sortingalgorithms.Logic.Algorithms;
 import javax.swing.JLabel;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
+import me.rueno.Sortingalgorithms.UI.Components.FeelsOhWait;
 
 public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 	
@@ -74,6 +75,11 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 				+ "Worst-Case: O(n²)"
 				+ "</p>"
 				+ "</html>";
+	}
+	
+	@Override
+	public JLabel getGif(){
+		return new FeelsOhWait(25, 25);
 	}
 	
 }

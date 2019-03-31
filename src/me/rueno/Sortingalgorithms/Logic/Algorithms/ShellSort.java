@@ -3,6 +3,7 @@ package me.rueno.Sortingalgorithms.Logic.Algorithms;
 import javax.swing.JLabel;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
+import me.rueno.Sortingalgorithms.UI.Components.FeelsOhWait;
 
 public class ShellSort extends DefaultVisualizedSortingAlgorithm{
 	
@@ -52,6 +53,11 @@ public class ShellSort extends DefaultVisualizedSortingAlgorithm{
 	@Override
 	public String getAlgorithmInfoText(){
 		return "";
+	}
+	
+	@Override
+	public JLabel getGif(){
+		return new FeelsOhWait(25, 25);
 	}
 	
 }

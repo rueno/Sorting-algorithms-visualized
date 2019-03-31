@@ -1,5 +1,8 @@
 package me.rueno.Sortingalgorithms.Logic.Algorithms;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
@@ -104,6 +107,11 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 				+ "Worst-Case: O(n²)"
 				+ "</p>"
 				+ "</html>";
+	}
+	
+	@Override
+	public JLabel getGif(){
+		return new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/resources/images/POGGERS.png")).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 	}
 	
 }

@@ -1,7 +1,6 @@
 package me.rueno.Sortingalgorithms.UI.Components;
 
 import java.awt.Image;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
@@ -12,21 +11,12 @@ import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 public abstract class AnimatedImageLabel extends JLabel{
 	
 	private static final long serialVersionUID = -6238097470939913778L;
-	
-	private String resourcePrefix;
-	private int delay, imageAmount, width, height;
 	private int currentImage;
-	private boolean preload, interrupted;
+	private boolean interrupted;
 	private ImageIcon[] images;
 	
-	private ScheduledFuture<?> renderer;
 	
 	public AnimatedImageLabel(String resourcePrefix, int delay, int imageAmount, int width, int height, boolean preload){
-		this.resourcePrefix = resourcePrefix;
-		this.delay = delay;
-		this.imageAmount = imageAmount;
-		this.width = width;
-		this.height = height;
 		this.currentImage = 0;
 		this.interrupted = false;
 		if(preload){
@@ -38,8 +28,8 @@ public abstract class AnimatedImageLabel extends JLabel{
 			this.setIcon(images[0]);
 		}
 		
-		this.renderer = GlobalVars.scheduler.schedule(() -> {
-			while(true){
+		GlobalVars.scheduler.schedule(() -> {
+			for(;;){
 				while(!interrupted){
 					try{
 						ImageIcon next;

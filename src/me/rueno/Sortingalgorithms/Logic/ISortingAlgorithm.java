@@ -1,5 +1,7 @@
 package me.rueno.Sortingalgorithms.Logic;
 
+import javax.swing.JLabel;
+
 public interface ISortingAlgorithm{
 	
 	public default String getName(){
@@ -14,5 +16,6 @@ public interface ISortingAlgorithm{
 	public <C extends Comparable<C>> long[] measureAlgorithm(C[] list);
 	public void normalizeDisplay();
 	public String getAlgorithmInfoText();
+	public JLabel getGif();
 	
 }

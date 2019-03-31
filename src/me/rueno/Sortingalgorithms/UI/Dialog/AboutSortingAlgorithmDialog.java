@@ -9,13 +9,13 @@ import me.rueno.Sortingalgorithms.Logic.ISortingAlgorithm;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
-import java.awt.SystemColor;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
+import javax.swing.JLabel;
 
 public class AboutSortingAlgorithmDialog extends JDialog{
 	
@@ -56,8 +56,21 @@ public class AboutSortingAlgorithmDialog extends JDialog{
 		textPane.setEditable(false);
 		textPane.setHighlighter(null);
 		textPane.setText(algo.getAlgorithmInfoText());
-//		textPane.setBackground(SystemColor.menu);
 		scrollPane.setViewportView(textPane);
+		
+		JPanel panel = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		contentPanel.add(panel, BorderLayout.NORTH);
+		
+		JLabel lblShort = new JLabel("Kurzzusammenfassung:");
+		panel.add(lblShort);
+		
+		if(algo.getGif() != null){
+			panel.add(algo.getGif());
+		}else{
+			panel.add(new JLabel("Nicht angegeben!"));
+		}
 		
 	}
 
