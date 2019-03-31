@@ -352,7 +352,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		lblLegende.setBounds(10, 158, 46, 14);
 		panel_1.add(lblLegende);
 		
-		JLabel lblStatistiken = new JLabel("Statistiken für Liste mit 100.000 Elementen:");
+		JLabel lblStatistiken = new JLabel("Statistiken für Liste mit 10.000 Elementen:");
 		lblStatistiken.setBounds(462, 184, 212, 14);
 		panel_1.add(lblStatistiken);
 		
@@ -477,10 +477,10 @@ public class VisualizedSortingAlgorithm extends JFrame{
 //			});
 //			runtimeSort.start();
 			measure = GlobalVars.scheduler.schedule(() -> {
-				Comparable[] array = generateListWithSelectedSettings(100000);
+				Comparable[] array = generateListWithSelectedSettings(10000);
 				long[] data = algo.measureAlgorithm(array);
 				setStatistics(data[1], data[2], data[0]);
-				if(!sorter.isDone()){
+				if(sorter.isDone()){
 					setComponentsEnabled(true);
 					pikaRun.setInterrupted(true);
 				}

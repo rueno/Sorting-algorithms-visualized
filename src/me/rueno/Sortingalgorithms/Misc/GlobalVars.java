@@ -10,7 +10,7 @@ public class GlobalVars{
 			Thread thread = new Thread(r);
 			thread.setDaemon(true);
 			thread.setName("GlobalVarsScheduler " + System.currentTimeMillis());
-			thread.setPriority(Thread.MAX_PRIORITY);
+			thread.setPriority(Thread.MIN_PRIORITY);
 			return thread;
 		});
 	}
