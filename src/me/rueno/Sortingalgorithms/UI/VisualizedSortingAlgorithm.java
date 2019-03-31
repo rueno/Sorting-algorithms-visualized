@@ -16,7 +16,6 @@ import me.rueno.Sortingalgorithms.Logic.DefaultVisualizedSortingAlgorithm;
 import me.rueno.Sortingalgorithms.Logic.ISortingAlgorithm;
 import me.rueno.Sortingalgorithms.Logic.Algorithms.*;
 import me.rueno.Sortingalgorithms.Misc.GlobalVars;
-import me.rueno.Sortingalgorithms.Misc.InterruptableThread;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 import me.rueno.Sortingalgorithms.UI.Components.PepePls;
 import me.rueno.Sortingalgorithms.UI.Components.PikaRun;
@@ -35,6 +34,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JTextPane;
 import javax.swing.JSeparator;
@@ -78,7 +79,8 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private AnimatedImageLabel pikaRun;
 	private JTable table;
 	
-	private Thread runtimeSort, visualizedSorter;
+//	private Thread runtimeSort, visualizedSorter;
+	private ScheduledFuture<?> sorter, measure;
 	private JButton btnCancel;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -426,11 +428,11 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		btnCancel.setFocusPainted(false);
 		btnCancel.setBounds(590, 284, 89, 23);
 		btnCancel.addActionListener(a -> {
-			if(visualizedSorter != null && visualizedSorter.isAlive()){
-				visualizedSorter.interrupt();
+			if(sorter != null && !sorter.isDone()){
+				sorter.cancel(true);
 			}
-			if(runtimeSort != null && runtimeSort.isAlive()){
-				runtimeSort.interrupt();
+			if(measure != null && !measure.isDone()){
+				measure.cancel(true);
 			}
 		});
 		panel_1.add(btnCancel);
@@ -443,25 +445,44 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			lblResaves.setText("0");
 			lblComparations.setText("0");
 			
-			visualizedSorter = new InterruptableThread(() -> {
-				algo.sortVisualized(list);
-				if(!runtimeSort.isAlive()){
+//			visualizedSorter = new InterruptableThread(() -> {
+//				algo.sortVisualized(list);
+//				if(!runtimeSort.isAlive()){
+//					setComponentsEnabled(true);
+//					pikaRun.setInterrupted(true);
+//				}
+//			});
+//			visualizedSorter.start();
+			
+			sorter = GlobalVars.scheduler.schedule(() -> {
+				try{
+					algo.sortVisualized(list);
+					System.out.println("Vis is done!");
+				}catch(InterruptedException ignore){}
+				if(measure.isDone()){
 					setComponentsEnabled(true);
 					pikaRun.setInterrupted(true);
 				}
-			});
-			visualizedSorter.start();
-			
-			runtimeSort = new InterruptableThread(() -> {
+			}, 0, TimeUnit.MILLISECONDS); 
+//			runtimeSort = new InterruptableThread(() -> {
+//				Comparable[] array = generateListWithSelectedSettings(100000);
+//				long[] data = algo.measureAlgorithm(array);
+//				setStatistics(data[1], data[2], data[0]);
+//				if(!visualizedSorter.isAlive()){
+//					setComponentsEnabled(true);
+//					pikaRun.setInterrupted(true);
+//				}
+//			});
+//			runtimeSort.start();
+			measure = GlobalVars.scheduler.schedule(() -> {
 				Comparable[] array = generateListWithSelectedSettings(100000);
 				long[] data = algo.measureAlgorithm(array);
 				setStatistics(data[1], data[2], data[0]);
-				if(!visualizedSorter.isAlive()){
+				if(!sorter.isDone()){
 					setComponentsEnabled(true);
 					pikaRun.setInterrupted(true);
 				}
-			});
-			runtimeSort.start();
+			}, 0, TimeUnit.MILLISECONDS);
 		});
 		
 		this.algo = new BubbleSort(labels);

@@ -15,7 +15,7 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list){
+	public <C extends Comparable<C>> void sortVisualized(C[] list)  throws InterruptedException{
 		int i = 0;
 		int n = list.length;
 		int j;
@@ -34,7 +34,7 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 		markAsSorted(list.length-1);
 	}
 	
-	protected <C extends Comparable<C>> long[] sort(C[] list){
+	protected <C extends Comparable<C>> long[] sort(C[] list) {
 		long comparations = 0, resaves = 0;
 		
 		int i = 0;

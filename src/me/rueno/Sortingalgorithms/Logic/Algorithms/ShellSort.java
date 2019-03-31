@@ -15,7 +15,7 @@ public class ShellSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list){
+	public <C extends Comparable<C>> void sortVisualized(C[] list)  throws InterruptedException{
 		int n = list.length;
 		
 		for(int gap = n/2; gap > 0 && !shouldInterrupt(); gap /= 2){

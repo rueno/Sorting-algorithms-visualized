@@ -15,11 +15,11 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list){
+	public <C extends Comparable<C>> void sortVisualized(C[] list)  throws InterruptedException{
 		qSortVis(list, 0, list.length-1);
 	}
 	
-	private <C extends Comparable<C>> void qSortVis(C[] list, int start, int end){
+	private <C extends Comparable<C>> void qSortVis(C[] list, int start, int end)  throws InterruptedException{
 		if(start >= end) return;
 		
 		int middle = start + (end - start) / 2;

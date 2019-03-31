@@ -15,7 +15,7 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 	}
 	
 	@Override
-	public <C extends Comparable<C>> void sortVisualized(C[] list){
+	public <C extends Comparable<C>> void sortVisualized(C[] list)  throws InterruptedException{
 		int n = list.length;
 		int minIndex;
 		int i = 0;
