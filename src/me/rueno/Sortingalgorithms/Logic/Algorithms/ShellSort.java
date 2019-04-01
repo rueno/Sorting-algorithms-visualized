@@ -34,20 +34,21 @@ public class ShellSort extends DefaultVisualizedSortingAlgorithm{
 	
 	@Override
 	protected <C extends Comparable<C>> long[] sort(C[] list){
+		long resaves = 0L, comparasions = 0L;
 		int n = list.length;
 		
 		for(int gap = n/2; gap > 0 && !shouldInterrupt(); gap /= 2){
 			for(int i = gap; i < n && !shouldInterrupt(); i += 1){
 				int j;
-				C temp = list[i];
+				C temp = list[i]; resaves++;
 				
-				for (j = i; j >= gap && list[j - gap].compareTo(temp) > 0 && !shouldInterrupt(); j -= gap){
-					list[j] = list[j-gap];
+				for (j = i; j >= gap && list[j - gap].compareTo(temp) > 0 && !shouldInterrupt(); j -= gap){ comparasions++;
+					list[j] = list[j-gap]; resaves++;
 				}
-				list[j] = temp;
+				list[j] = temp; resaves++;
 			}
 		}
-		return new long[] {0L, 0L};
+		return new long[] {resaves, comparasions};
 	}
 
 	@Override

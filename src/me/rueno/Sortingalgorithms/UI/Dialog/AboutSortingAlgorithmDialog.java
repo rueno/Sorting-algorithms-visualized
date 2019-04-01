@@ -69,6 +69,7 @@ public class AboutSortingAlgorithmDialog extends JDialog{
 		textPane.setEditable(false);
 		textPane.setHighlighter(null);
 		textPane.setText(algo.getAlgorithmInfoText());
+		textPane.setCaretPosition(0);
 		scrollPane.setViewportView(textPane);
 		
 		JPanel panel = new JPanel();

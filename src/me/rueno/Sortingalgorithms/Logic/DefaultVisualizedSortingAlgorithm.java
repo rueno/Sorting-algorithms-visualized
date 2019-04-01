@@ -28,13 +28,6 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		for(int i = 0; i < 12; i++){
 			labels[i].setLocation(40 + (i * 40) + (i * 10), 40);
 			labels[i].setBackground(defaultBackground);
-//			label.setHorizontalAlignment(SwingConstants.CENTER);
-//			label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-//			label.setOpaque(true);
-//			label.setBounds(40 + (i * 40) + (i * 10), 40, 40, 40);
-//			panel_1.add(label);
-//			label.setText(String.valueOf(list[i]));
-//			labels[i] = label;
 		}
 	}
 	
@@ -112,14 +105,14 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		panelX.setBackground(Color.CYAN);
 		panelY.setBackground(Color.CYAN);
 		
-		//runter schieben
+		/*runter schieben*/
 		for(int currentYDeviation = 0; currentYDeviation < (int) (panelX.getHeight() * 1.5D); currentYDeviation += currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() + currentSpeed);
 			panelY.setLocation(panelY.getX(), panelY.getY() + currentSpeed);
 			sleepAppropiateAmountOfTimeForSwap();
 		}
 		
-		//Zum jeweiligen anderen Standpunkt verschieben
+		/*Zum jeweiligen anderen Standpunkt verschieben*/
 		int deviationX, deviationY;
 		
 		int difFromXToY = labels[posX].getX() - labels[posY].getX();
@@ -131,9 +124,9 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		
 		
 		for(int i = 0; i < loops; i++) {
-//			PanelX verschieben
+/*			PanelX verschieben*/
 			panelX.setLocation(panelX.getX() + deviationX, panelX.getY());
-			//PanelY verschieben
+			/*PanelY verschieben*/
 			panelY.setLocation(panelY.getX() + deviationY, panelY.getY());
 			sleepAppropiateAmountOfTimeForSwap();
 		}
@@ -141,22 +134,14 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		panelX.setLocation((int) (panelX.getX() + difFromYToX % currentSpeed), panelX.getY());
 		panelY.setLocation((int) (panelY.getX() + difFromXToY % currentSpeed), panelY.getY());
 		
-//		while(panelX.getX() != y){
-//			//PanelX verschieben
-//			panelX.setLocation(panelX.getX() + 1, panelX.getY());
-//			//PanelY verschieben
-//			panelY.setLocation(panelY.getX() - 1, panelY.getY());
-//			sleepAppropiateAmountOfTimeForSwap(currentSpeed);
-//		}
-		
-		//Hinauf schieben (Fast äquivalent zu runter schieben, eventuell eine Mehtode anlegen?
+		/*Hinauf schieben*/
 		for(int currentYDeviation = (int) (panelX.getHeight() * 1.5D); currentYDeviation > 0; currentYDeviation -= currentSpeed){
 			panelX.setLocation(panelX.getX(), panelX.getY() - currentSpeed);
 			panelY.setLocation(panelY.getX(), panelY.getY() - currentSpeed);
 			sleepAppropiateAmountOfTimeForSwap();
 		}
 		
-		//Jetzt noch die Panel im Panelarray vertauschen
+		/*Jetzt noch die Panel im Panelarray vertauschen*/
 		JLabel tempPanel = labels[posX];
 		labels[posX] = labels[posY];
 		labels[posY] = tempPanel;
@@ -177,7 +162,7 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 	 */
 	@Override
 	public final <C extends Comparable<C>> int compareVisualized(C[] list, int posX, int posY, int speed) throws InterruptedException{
-		//Visualisieren
+		/*Visualisieren*/
 		if(posX == posY) list[posX].compareTo(list[posY]);
 		labels[posX].setBackground(Color.RED);
 		labels[posY].setBackground(Color.RED);

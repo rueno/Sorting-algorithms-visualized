@@ -60,35 +60,35 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		long resaves = 0, comparasons = 0;
 		
 		int pivIndex = start + (end - start) / 2;
-		C pivot = list[pivIndex];
+		C pivot = list[pivIndex]; resaves++;
 		
 		int i = start, j = end;
 		
-		while(i <= j && !shouldInterrupt()){ comparasons++;
+		while(i <= j && !shouldInterrupt()){
 			while(list[i].compareTo(pivot) < 0 && !shouldInterrupt()){ comparasons++;
-				i++; resaves++;
+				i++;
 			} comparasons++;
 			while(list[j].compareTo(pivot) > 0 && !shouldInterrupt()){ comparasons++;
-				j--; resaves++;
-			} comparasons++;
+				j--;
+			}
 			
 			if(i <= j && !shouldInterrupt()){
 				swap(list, i, j); resaves += 3;
-				i++; resaves++;
-				j--; resaves++;
-			} comparasons++;
+				i++;
+				j--;
+			}
 		}
 		
 		if(start < j && !shouldInterrupt()){
 			long[] data = qSort(list, start, j);
 			resaves += data[0];
 			comparasons += data[1];
-		} comparasons++;
+		}
 		if(end > i && !shouldInterrupt()){
 			long[] data = qSort(list, i, end);
 			resaves += data[0];
 			comparasons += data[1];
-		} comparasons++;
+		}
 		return new long[] {resaves, comparasons};
 	}
 	

@@ -45,18 +45,18 @@ public class InsertionSort extends DefaultVisualizedSortingAlgorithm{
 		int n = list.length;
 		int i = 1;
 		int j;
-		while(i < n && !shouldInterrupt()){ comparations++;
+		while(i < n && !shouldInterrupt()){
 			j = i; resaves++;
-			while(j > 0 && !shouldInterrupt()){ comparations++;
+			while(j > 0 && !shouldInterrupt()){
 				if(list[j].compareTo(list[j-1]) < 0 && !shouldInterrupt()){ comparations++;
 					swap(list, j, j-1); resaves += 3;
-					j--; resaves++;
+					j--;
 				}else {
-					j = 0; resaves++;
+					j = 0;
 				}
-			} comparations++;
-			i++; resaves++;
-		} comparations++;
+			}
+			i++;
+		}
 		return new long[] {resaves, comparations};
 	}
 	

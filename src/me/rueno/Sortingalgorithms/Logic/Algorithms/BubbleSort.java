@@ -44,16 +44,16 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 		int n = list.length;
 		int j;
 		
-		while(i < (n - 1) && !shouldInterrupt()){ comparations++;
-			j = n - 1; resaves++;
-			while(j > i && !shouldInterrupt()){ comparations++;
+		while(i < (n - 1) && !shouldInterrupt()){
+			j = n - 1;
+			while(j > i && !shouldInterrupt()){
 				if(list[j].compareTo(list[j-1]) < 0){ comparations++;
 					swap(list, j, j-1); resaves += 3;
 				}
-				j--; resaves++;
-			} comparations++;
-			i++; resaves++;
-		} comparations++;
+				j--;
+			}
+			i++;
+		}
 		return new long[] {resaves, comparations};
 	}
 	

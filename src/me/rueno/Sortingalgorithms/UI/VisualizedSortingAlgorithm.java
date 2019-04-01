@@ -519,15 +519,15 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private Comparable[] generateListWithSelectedSettings(int length){
 		ListType type = (ListType) cbListSortMethod.getSelectedItem();
 		switch(cbListContent.getSelectedIndex()) {
-			case 0: //Integer
+			case 0:
 				return gen.generateIntegerList(length, type);
-			case 1: //Long
+			case 1:
 				return gen.generateLongList(length, type);
-			case 2: //Float
+			case 2:
 				return gen.generateFloatList(length, type);
-			case 3: //Double
+			case 3:
 				return gen.generateDoubleList(length, type);
-			case 4: //String
+			case 4:
 				return gen.generateStringList(length);
 			default:
 				break;

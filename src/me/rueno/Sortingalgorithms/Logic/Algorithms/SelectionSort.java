@@ -49,19 +49,19 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 		int i = 0;
 		int j;
 		
-		while(i < (n-1) && !shouldInterrupt()){ comparations++;
-			j = i + 1; resaves++;
-			minIndex = i; resaves++;
+		while(i < (n-1) && !shouldInterrupt()){
+			j = i + 1;
+			minIndex = i;
 			
-			while(j < n && !shouldInterrupt()){ comparations++;
+			while(j < n && !shouldInterrupt()){
 				if(list[j].compareTo(list[minIndex]) < 0 && !shouldInterrupt()){ comparations++;
 					minIndex = j; resaves++;
 				}
-				j++; resaves++;
-			} comparations++;
+				j++;
+			}
 			swap(list, i, minIndex); resaves += 3;
 			i++; resaves++;
-		} comparations++;
+		}
 		
 		return new long [] {resaves, comparations};
 	}
