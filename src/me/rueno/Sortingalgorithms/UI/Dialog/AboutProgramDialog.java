@@ -3,9 +3,12 @@ package me.rueno.Sortingalgorithms.UI.Dialog;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.JButton;
@@ -50,11 +53,12 @@ public class AboutProgramDialog extends JDialog{
 		
 		JEditorPane dtrpnberDieseSoftware = new JEditorPane();
 		dtrpnberDieseSoftware.setContentType("text/html");
-		dtrpnberDieseSoftware.setText("<html>\r\n<h2 style=\"text-align:center;\">Über diese Software</h2>\r\n<p style=\"text-align:center;\">Rechtliches:</p>\r\n<p>Alle Icons dieser Software sind zu Verfügung gestellt von <a href=\"https://www.icons8.de/\">icons8.de</a>.</p>\r\n<p style=\"text-align:center;\">Abhängigkeiten</p>\r\n<ul>\r\n<li><a href=\"http://www.jfree.org/jcommon/\">JCommon</a></li>\r\n<li><a href=\"http://www.jfree.org/jfreechart/\">JFreeChart</a></li>\r\n</ul>\r\n</html>");
+		dtrpnberDieseSoftware.setText("<html>\r\n<h2 style=\"text-align:center;margin:2px;\">Über diese Software</h2>\r\n<p style=\"text-align:center;margin:2px\">Rechtliches:</p>\r\n<p style=\"margin:2px;\">Alle Icons dieser Software sind zu Verfügung gestellt von <a href=\"https://www.icons8.de/\">icons8.de</a>.</p>\r\n<p style=\"text-align:center;\">Abhängigkeiten</p>\r\n<ul>\r\n<li><a href=\"http://www.jfree.org/jcommon/\">JCommon</a></li>\r\n<li><a href=\"http://www.jfree.org/jfreechart/\">JFreeChart</a></li>\r\n</ul>\r\n</html>");
 		dtrpnberDieseSoftware.setEditable(false);
 		dtrpnberDieseSoftware.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		dtrpnberDieseSoftware.setHighlighter(null);
-		dtrpnberDieseSoftware.addHyperlinkListener(new HyperlinkListener() {
+		dtrpnberDieseSoftware.setBorder(new LineBorder(Color.BLACK, 1));
+		dtrpnberDieseSoftware.addHyperlinkListener(new HyperlinkListener(){
 			
 			@Override
 			public void hyperlinkUpdate(HyperlinkEvent e){

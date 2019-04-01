@@ -52,7 +52,6 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 		
 		JCheckBox chckbxBubblesort = new JCheckBox("Bubblesort");
 		chckbxBubblesort.setFocusPainted(false);
-		resultAsList.add(new BubbleSort());
 		chckbxBubblesort.setBounds(6, 20, 77, 23);
 		chckbxBubblesort.addActionListener(a -> {
 			addOrRemove(BubbleSort.class, ((JCheckBox)a.getSource()).isSelected());
@@ -61,7 +60,6 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 		
 		JCheckBox chckbxSelectionsort = new JCheckBox("Selectionsort");
 		chckbxSelectionsort.setFocusPainted(false);
-		resultAsList.add(new SelectionSort());
 		chckbxSelectionsort.setBounds(6, 46, 87, 23);
 		chckbxSelectionsort.addActionListener(a -> {
 			addOrRemove(SelectionSort.class, ((JCheckBox)a.getSource()).isSelected());
@@ -70,7 +68,6 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 		
 		JCheckBox chckbxInsertionsort = new JCheckBox("Insertionsort");
 		chckbxInsertionsort.setFocusPainted(false);
-		resultAsList.add(new InsertionSort());
 		chckbxInsertionsort.setBounds(6, 72, 87, 23);
 		chckbxInsertionsort.addActionListener(a -> {
 			addOrRemove(InsertionSort.class, ((JCheckBox)a.getSource()).isSelected());
@@ -96,7 +93,6 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 		
 		JCheckBox chckbxQuicksort = new JCheckBox("Quicksort");
 		chckbxQuicksort.setFocusPainted(false);
-		resultAsList.add(new QuickSort());
 		chckbxQuicksort.setBounds(95, 46, 77, 23);
 		chckbxQuicksort.addActionListener(a -> {
 			addOrRemove(QuickSort.class, ((JCheckBox)a.getSource()).isSelected());
