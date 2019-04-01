@@ -70,12 +70,17 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 	public String getAlgorithmInfoText(){
 		return "<html>"
 				+ "<h2 style=\"text-align:center;\">Selectionsort</h2>"
-				+ "<p style=\"text-align:justify;\">Der Selectionsort (Sortieren durch Auswählen, alternativ auch"
-				+ " Maxsort, Minsort, Selecsort oder Exchancesort genannt) sortiert eine Liste, indem er sich immer das nächst kleine Element"
-				+ " aus der Liste raussucht (auswählt) und dieses anschließend an die korrekte Stelle der Liste tauscht."
-				+ " Dieser Algorithmus ist vergleichsweise einfach zu implementieren aber nicht allzu effizient. "
-				+ "In der Praxis wird der Selectionsort eigentlich nicht eingesetzt, da er im Vergleich zu anderen Sortier"
-				+ "verfahren (zum Beispiel QuickSort oder MergeSort) sehr zeitaufwendig ist. </p>"
+				+ "<p style=\"text-align:justify;\">Selectionsort (englisch selection ‚Auswahl‘ und englisch sort ‚sortieren‘) ist ein einfacher („naiver“) Sortieralgorithmus, der"
+				+ " in-place arbeitet und in seiner Grundform instabil ist, wobei er sich auch stabil implementieren lässt. "
+				+ "Alternative Bezeichnungen des Algorithmus sind MinSort (von Minimum) bzw. MaxSort (von Maximum), Selectsort oder ExchangeSort (AustauschSort).<br>"
+				+ "Sei S der sortierte Teil des Arrays (vorne im Array) und U der unsortierte Teil (dahinter). Am Anfang ist S noch leer, U entspricht dem ganzen (restlichen) Array."
+				+ " Das Sortieren durch Auswählen läuft nun folgendermaßen ab:" + 
+				"Suche das kleinste Element in U und vertausche es mit dem ersten Element von U (= das erste Element nach S)." +  
+				"Danach ist das Array bis zu dieser Position sortiert. Das kleinste Element wird in S verschoben (indem S einfach als ein "
+				+ "Element länger betrachtet wird, und U nun ein Element später beginnt). S ist um ein Element gewachsen, U um ein Element kürzer geworden."
+				+ " Anschließend wird das Verfahren so lange wiederholt, bis das gesamte Array abgearbeitet worden ist; S umfasst am Ende das gesamte Array,"
+				+ " aufsteigend sortiert, U ist leer.<br><br>"
+				+ "(Von <a href=\"https://de.wikipedia.org/wiki/Selectionsort\">Wikipedia, der freien Enzyklopädie</a>, Zugriff am 01.04.2019)</p>"
 				+ "<br><br>"
 				+ "<h3>Laufzeiten</h3>"
 				+ "Average-Case: O(n²)<br>"

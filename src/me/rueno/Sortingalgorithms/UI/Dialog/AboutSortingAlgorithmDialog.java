@@ -8,17 +8,21 @@ import me.rueno.Sortingalgorithms.Logic.ISortingAlgorithm;
 import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.HyperlinkEvent;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.URL;
 
 public class AboutSortingAlgorithmDialog extends JDialog{
 	
@@ -71,6 +75,16 @@ public class AboutSortingAlgorithmDialog extends JDialog{
 		textPane.setText(algo.getAlgorithmInfoText());
 		textPane.setCaretPosition(0);
 		scrollPane.setViewportView(textPane);
+		
+		textPane.addHyperlinkListener(e -> {
+			if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED){
+				try{
+					Desktop.getDesktop().browse(new URL(e.getDescription()).toURI());
+				}catch(Exception ignore){
+					new ExceptionDialog(ignore);
+				}
+			}
+		});
 		
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();

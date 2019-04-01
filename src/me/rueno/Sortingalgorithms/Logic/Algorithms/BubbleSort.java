@@ -61,11 +61,17 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 	public String getAlgorithmInfoText(){
 		return "<html>"
 				+ "<h2 style=\"text-align:center;\">Bubblesort</h2>"
-				+ "<p style=\"text-align:justify;\">Der Bubblesort (Sortieren durch Auf- bzw. Absteigen) sortiert eine Liste durch Vergleichen und Tauschen."
-				+ " Der Algorithmus eignet sich besonders zum demonstrieren und zum Einstieg in Sortieralgorithmen, da er sehr "
-				+ "leicht zu verstehen ist. In "
-				+ "der Praxis wird der Bubblesort eigentlich nicht eingesetzt, da der Bubblesort im Vergleich zu anderen Sortier"
-				+ "verfahren (zum Beispiel QuickSort oder MergeSort) sehr zeitaufwendig ist.</p>"
+				+ "<p style=\"text-align:justify;\">Bubblesort (auch Sortieren durch Aufsteigen oder Austauschsortieren) "
+				+ "ist ein Algorithmus, der vergleichsbasiert eine Liste von Elementen sortiert. Dieses Sortierverfahren"
+				+ " arbeitet in-place und sortiert stabil. In der Praxis wird Bubblesort kaum eingesetzt, da andere Verfahren ein besseres Laufzeitverhalten haben. "
+				+ "Der Algorithmus spielt allerdings in der Lehre eine Rolle, da er als einfach zu erklären bzw. zu demonstrieren gilt. Des Weiteren "
+				+ "eignet sich der Algorithmus, um Techniken wie schrittweise Optimierungen, Laufzeit- bzw. Komplexitäts- und Korrektheitsanalyse einzuführen.<br>"
+				+ "In der Bubble-Phase wird die Eingabe-Liste von links nach rechts durchlaufen. Dabei wird in jedem Schritt das aktuelle Element mit dem rechten Nachbarn verglichen. Falls die beiden Elemente das Sortierkriterium verletzen, werden sie getauscht. Am Ende der Phase steht bei auf- bzw. absteigender Sortierung das größte bzw. kleinste Element der Eingabe am Ende der Liste.\r\n" + 
+				"Die Bubble-Phase wird solange wiederholt, bis die Eingabeliste vollständig sortiert ist. Dabei muss das letzte Element des vorherigen "
+				+ "Durchlaufs nicht mehr betrachtet werden, da die restliche zu sortierende Eingabe keine größeren bzw. kleineren Elemente mehr enthält." + 
+				"Je nachdem, ob auf- oder absteigend sortiert wird, steigen die größeren oder kleineren Elemente wie Blasen im Wasser (daher der Name) immer"
+				+ " weiter nach oben, das heißt, an das Ende der Liste. Es werden stets zwei Zahlen miteinander in „Bubbles“ vertauscht.<br><br>"
+				+ "(Von <a href=\"https://de.wikipedia.org/wiki/Bubblesort\">Wikipedia, der freien Enzyklopädie</a>, Zugriff am 01.04.2019)</p>"
 				+ "<br><br>"
 				+ "<h3>Laufzeiten</h3>"
 				+ "<p>Worst-Case: O(n²)<br>"
