@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -23,7 +25,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import me.rueno.Sortingalgorithms.Lists.ListGenerator;
 import me.rueno.Sortingalgorithms.Lists.ListType;
 import me.rueno.Sortingalgorithms.Logic.ISortingAlgorithm;
-import me.rueno.Sortingalgorithms.Misc.InterruptableThread;
+import me.rueno.Sortingalgorithms.Misc.GlobalVars;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -38,7 +40,7 @@ public class CompareAlgosDialog extends JDialog{
 	private static final long serialVersionUID = -5642464823449347982L;
 	
 	private JFreeChart chart;
-	private Thread dataMaker;
+	private ScheduledFuture<?> dataMaker;
 	
 	private final Map<String, Color> algoColorMap;
 	private JButton btnCancel;
@@ -48,8 +50,8 @@ public class CompareAlgosDialog extends JDialog{
 			
 			@Override
 			public void windowClosing(WindowEvent e){
-				if(dataMaker != null && dataMaker.isAlive()){
-					dataMaker.interrupt();
+				if(dataMaker != null && !dataMaker.isDone()){
+					dataMaker.cancel(true);
 				}
 			}
 			
@@ -81,8 +83,8 @@ public class CompareAlgosDialog extends JDialog{
 		btnCancel = new JButton("Abbrechen");
 		btnCancel.setFocusPainted(false);
 		btnCancel.addActionListener(a -> {
-			if(dataMaker != null && dataMaker.isAlive()){
-				dataMaker.interrupt();
+			if(dataMaker != null && !dataMaker.isDone()){
+				dataMaker.cancel(true);
 			}
 		});
 		southPanel.add(btnCancel);
@@ -131,11 +133,11 @@ public class CompareAlgosDialog extends JDialog{
 	}
 	
 	private void createDataAsynch(HashMap<ISortingAlgorithm, XYSeries> map){
-		dataMaker = new InterruptableThread(() -> {
+		GlobalVars.scheduler.schedule(() -> {
 			ListGenerator gen = new ListGenerator();
 			HashMap<Integer, Integer[]> lists = new HashMap<>();
 			
-			for(int i = 5000; i <= 50000 && !dataMaker.isInterrupted(); i += 5000){
+			for(int i = 5000; i <= 50000; i += 5000){
 				lists.put(i, gen.generateIntegerList(i, ListType.RANDOM));
 			}
 			XYSeries series;
@@ -143,20 +145,15 @@ public class CompareAlgosDialog extends JDialog{
 			for(Entry<ISortingAlgorithm, XYSeries> entry: map.entrySet()){
 				series = entry.getValue();
 				
-				for(int i = 5000; i <= 50000 && !dataMaker.isInterrupted(); i += 5000){
+				for(int i = 5000; i <= 50000; i += 5000){
 					data = entry.getKey().measureAlgorithm(copyArray(lists.get(i)))[0] / 1000.0F;
-					if(!dataMaker.isInterrupted()){
-						synchronized(series){
-							series.add(i, data);
-						}
+					synchronized(series){
+						series.add(i, data);
 					}
 				}
 			}
 			btnCancel.setEnabled(false);
-		});
-		
-		dataMaker.setDaemon(true);
-		dataMaker.start();
+		}, 0, TimeUnit.MILLISECONDS);
 	}
 	
 	private Integer[] copyArray(Integer[] toCopy){

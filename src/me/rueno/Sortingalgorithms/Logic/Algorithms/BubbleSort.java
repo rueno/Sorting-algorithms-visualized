@@ -23,9 +23,9 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 		int n = list.length;
 		int j;
 		
-		while(i < (n - 1) && !shouldInterrupt()){
+		while(i < (n - 1)){
 			j = n - 1;
-			while(j > i && !shouldInterrupt()){
+			while(j > i){
 				if(compareVisualized(list, j, j-1, 4) < 0){
 					swapVisualized(list, j, j-1, 4);
 				}
@@ -44,9 +44,9 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 		int n = list.length;
 		int j;
 		
-		while(i < (n - 1) && !shouldInterrupt()){
+		while(i < (n - 1)){
 			j = n - 1;
-			while(j > i && !shouldInterrupt()){
+			while(j > i){
 				if(list[j].compareTo(list[j-1]) < 0){ comparations++;
 					swap(list, j, j-1); resaves += 3;
 				}

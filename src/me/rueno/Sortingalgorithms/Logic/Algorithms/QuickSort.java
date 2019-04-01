@@ -29,19 +29,19 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		C pivot = list[middle];
 		
 		int i = start, j = end;
-		while(i <= j && !shouldInterrupt()){
-			while(compareVisualized(list, i, indexOf(list, pivot), 4) < 0 && !shouldInterrupt()) i++;
-			while(compareVisualized(list, j, indexOf(list, pivot), 4) > 0 && !shouldInterrupt()) j--;
+		while(i <= j){
+			while(compareVisualized(list, i, indexOf(list, pivot), 4) < 0) i++;
+			while(compareVisualized(list, j, indexOf(list, pivot), 4) > 0) j--;
 			
-			if(i <= j && !shouldInterrupt()){
+			if(i <= j){
 				swapVisualized(list, i, j, 4);
 				i++;
 				j--;
 			}
 		}
 		
-		if(start < j && !shouldInterrupt()) qSortVis(list, start, j);
-		if(end > i && !shouldInterrupt()) qSortVis(list, i, end);
+		if(start < j) qSortVis(list, start, j);
+		if(end > i) qSortVis(list, i, end);
 		
 	}
 	
@@ -64,27 +64,27 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		
 		int i = start, j = end;
 		
-		while(i <= j && !shouldInterrupt()){
-			while(list[i].compareTo(pivot) < 0 && !shouldInterrupt()){ comparasons++;
+		while(i <= j){
+			while(list[i].compareTo(pivot) < 0){ comparasons++;
 				i++;
 			} comparasons++;
-			while(list[j].compareTo(pivot) > 0 && !shouldInterrupt()){ comparasons++;
+			while(list[j].compareTo(pivot) > 0){ comparasons++;
 				j--;
 			}
 			
-			if(i <= j && !shouldInterrupt()){
+			if(i <= j){
 				swap(list, i, j); resaves += 3;
 				i++;
 				j--;
 			}
 		}
 		
-		if(start < j && !shouldInterrupt()){
+		if(start < j){
 			long[] data = qSort(list, start, j);
 			resaves += data[0];
 			comparasons += data[1];
 		}
-		if(end > i && !shouldInterrupt()){
+		if(end > i){
 			long[] data = qSort(list, i, end);
 			resaves += data[0];
 			comparasons += data[1];
