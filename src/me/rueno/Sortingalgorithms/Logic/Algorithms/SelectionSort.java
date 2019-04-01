@@ -69,8 +69,8 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 	@Override
 	public String getAlgorithmInfoText(){
 		return "<html>"
-				+ "<h2 style=\"text-align:center;\">Selectionsort</h2>"
-				+ "<p style=\"text-align:justify;\">Selectionsort (englisch selection ‚Auswahl‘ und englisch sort ‚sortieren‘) ist ein einfacher („naiver“) Sortieralgorithmus, der"
+				+ "<h2 style=\"text-align:center;font-family:sans-serif;\">Selectionsort</h2>"
+				+ "<p style=\"text-align:justify;font-family:sans-serif;\">Selectionsort (englisch selection ‚Auswahl‘ und englisch sort ‚sortieren‘) ist ein einfacher („naiver“) Sortieralgorithmus, der"
 				+ " in-place arbeitet und in seiner Grundform instabil ist, wobei er sich auch stabil implementieren lässt. "
 				+ "Alternative Bezeichnungen des Algorithmus sind MinSort (von Minimum) bzw. MaxSort (von Maximum), Selectsort oder ExchangeSort (AustauschSort).<br>"
 				+ "Sei S der sortierte Teil des Arrays (vorne im Array) und U der unsortierte Teil (dahinter). Am Anfang ist S noch leer, U entspricht dem ganzen (restlichen) Array."
@@ -81,10 +81,6 @@ public class SelectionSort extends DefaultVisualizedSortingAlgorithm{
 				+ " Anschließend wird das Verfahren so lange wiederholt, bis das gesamte Array abgearbeitet worden ist; S umfasst am Ende das gesamte Array,"
 				+ " aufsteigend sortiert, U ist leer.<br><br>"
 				+ "(Von <a href=\"https://de.wikipedia.org/wiki/Selectionsort\">Wikipedia, der freien Enzyklopädie</a>, Zugriff am 01.04.2019)</p>"
-				+ "<br><br>"
-				+ "<h3>Laufzeiten</h3>"
-				+ "Average-Case: O(n²)<br>"
-				+ "Worst-Case: O(n²)"
 				+ "</p>"
 				+ "</html>";
 	}

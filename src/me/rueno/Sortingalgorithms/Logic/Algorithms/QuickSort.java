@@ -95,8 +95,8 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 	@Override
 	public String getAlgorithmInfoText(){
 		return "<html>"
-				+ "<h2 style=\"text-align:center;\">Quicksort</h2>"
-				+ "<p style=\"text-align:justify;\">Quicksort (englisch quick ‚schnell‘ und to sort ‚sortieren‘) ist ein schneller, rekursiver, "
+				+ "<h2 style=\"text-align:center;font-family:sans-serif;\">Quicksort</h2>"
+				+ "<p style=\"text-align:justify;font-family:sans-serif;\">Quicksort (englisch quick ‚schnell‘ und to sort ‚sortieren‘) ist ein schneller, rekursiver, "
 				+ "nicht-stabiler Sortieralgorithmus, der nach dem Prinzip Teile und herrsche (lateinisch Divide et impera!, englisch divide and conquer) "
 				+ "arbeitet. Er wurde ca. 1960 von C. Antony R. Hoare in seiner Grundform entwickelt[1] und seitdem von vielen Forschern verbessert. Der Algorithmus"
 				+ " hat den Vorteil, dass er über eine sehr kurze innere Schleife verfügt (was die Ausführungsgeschwindigkeit stark erhöht) und ohne zusätzlichen Speicherplatz auskommt "
@@ -112,11 +112,6 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 				+ "kürzer ist als die Gesamtliste. Dann endet die Rekursion garantiert nach endlich vielen Schritten. Das kann z. B. dadurch erreicht werden, "
 				+ "dass das ursprünglich als Pivot gewählte Element auf einen Platz zwischen den Teillisten gesetzt wird und somit zu keiner Teilliste gehört.<br><br>"
 				+ "(Von <a href=\"https://de.wikipedia.org/wiki/Quicksort\">Wikipedia, der freien Enzyklopädie</a>, Zugriff am 01.04.2019)</p>"
-				+ "<br><br>"
-				+ "<h3>Laufzeiten</h3>"
-				+ "Average-Case: O(n*log(n))<br>"
-				+ "Worst-Case: O(n²)"
-				+ "</p>"
 				+ "</html>";
 	}
 	

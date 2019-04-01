@@ -50,16 +50,12 @@ public class BogoSort extends DefaultVisualizedSortingAlgorithm{
 	@Override
 	public String getAlgorithmInfoText(){
 		return "<html>"
-				+ "<h2 style=\"text-align:center;\">Bogosort</h2>"
-				+ "<p style=\"text-align:justify;\">Bogosort, Alexsort, Monkeysort oder Stupidsort bezeichnet ein nicht-stabiles Sortierverfahren, bei dem die Elemente"
+				+ "<h2 style=\"text-align:center;font-family:sans-serif;\">Bogosort</h2>"
+				+ "<p style=\"text-align:justify;font-family:sans-serif;\">Bogosort, Alexsort, Monkeysort oder Stupidsort bezeichnet ein nicht-stabiles Sortierverfahren, bei dem die Elemente"
 				+ " so lange zufällig gemischt werden, bis sie sortiert sind. Wegen der langen Laufzeit ist Bogosort der Prototyp eines schlechten Algorithmus. Bogosort wird"
 				+ " insbesondere in der Informatik-Ausbildung in den Bereichen Datenstrukturen und Algorithmen verwendet, um an einem Extrembeispiel die Eigenschaften von Sortierverfahren"
 				+ " im Allgemeinen zu verdeutlichen.<br><br>"
 				+ "(Von <a href=\"https://de.wikipedia.org/wiki/Bogosort\">Wikipedia, der freien Enzyklopädie</a>, Zugriff am 01.04.2019)</p>"
-				+ "<br><br>"
-				+ "<h3>Laufzeiten</h3>"
-				+ "Sind unmöglich zu ermitteln"
-				+ "</p>"
 				+ "</html>";
 	}
 

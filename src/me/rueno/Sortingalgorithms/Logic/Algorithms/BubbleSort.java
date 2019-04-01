@@ -60,8 +60,8 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 	@Override
 	public String getAlgorithmInfoText(){
 		return "<html>"
-				+ "<h2 style=\"text-align:center;\">Bubblesort</h2>"
-				+ "<p style=\"text-align:justify;\">Bubblesort (auch Sortieren durch Aufsteigen oder Austauschsortieren) "
+				+ "<h2 style=\"text-align:center;font-family:sans-serif;\">Bubblesort</h2>"
+				+ "<p style=\"text-align:justify;font-family:sans-serif;\">Bubblesort (auch Sortieren durch Aufsteigen oder Austauschsortieren) "
 				+ "ist ein Algorithmus, der vergleichsbasiert eine Liste von Elementen sortiert. Dieses Sortierverfahren"
 				+ " arbeitet in-place und sortiert stabil. In der Praxis wird Bubblesort kaum eingesetzt, da andere Verfahren ein besseres Laufzeitverhalten haben. "
 				+ "Der Algorithmus spielt allerdings in der Lehre eine Rolle, da er als einfach zu erklären bzw. zu demonstrieren gilt. Des Weiteren "
@@ -72,11 +72,6 @@ public class BubbleSort extends DefaultVisualizedSortingAlgorithm{
 				"Je nachdem, ob auf- oder absteigend sortiert wird, steigen die größeren oder kleineren Elemente wie Blasen im Wasser (daher der Name) immer"
 				+ " weiter nach oben, das heißt, an das Ende der Liste. Es werden stets zwei Zahlen miteinander in „Bubbles“ vertauscht.<br><br>"
 				+ "(Von <a href=\"https://de.wikipedia.org/wiki/Bubblesort\">Wikipedia, der freien Enzyklopädie</a>, Zugriff am 01.04.2019)</p>"
-				+ "<br><br>"
-				+ "<h3>Laufzeiten</h3>"
-				+ "<p>Worst-Case: O(n²)<br>"
-				+ "Average-Case: O(n²)<br>"
-				+ "</p>"
 				+ "</html>";
 	}
 	
