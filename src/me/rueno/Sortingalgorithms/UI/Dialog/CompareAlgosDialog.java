@@ -46,7 +46,7 @@ public class CompareAlgosDialog extends JDialog{
 	private JButton btnCancel;
 	
 	public CompareAlgosDialog(JFrame parent, ISortingAlgorithm... algorithms){
-		addWindowListener(new WindowAdapter() {
+		addWindowListener(new WindowAdapter(){
 			
 			@Override
 			public void windowClosing(WindowEvent e){
@@ -133,7 +133,7 @@ public class CompareAlgosDialog extends JDialog{
 	}
 	
 	private void createDataAsynch(HashMap<ISortingAlgorithm, XYSeries> map){
-		GlobalVars.scheduler.schedule(() -> {
+		this.dataMaker = GlobalVars.scheduler.schedule(() -> {
 			ListGenerator gen = new ListGenerator();
 			HashMap<Integer, Integer[]> lists = new HashMap<>();
 			
@@ -146,6 +146,11 @@ public class CompareAlgosDialog extends JDialog{
 				series = entry.getValue();
 				
 				for(int i = 5000; i <= 50000; i += 5000){
+					if(dataMaker.isCancelled() || dataMaker.isDone()){
+						btnCancel.setEnabled(false);
+						return;
+					} /*Necessary for whatever reason. Without this code, the Task will be executed, even if the dataMaker-future knows, that it is done!*/
+					
 					data = entry.getKey().measureAlgorithm(copyArray(lists.get(i)))[0] / 1000.0F;
 					synchronized(series){
 						series.add(i, data);
