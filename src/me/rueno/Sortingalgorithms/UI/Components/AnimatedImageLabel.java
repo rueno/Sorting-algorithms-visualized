@@ -1,6 +1,7 @@
 package me.rueno.Sortingalgorithms.UI.Components;
 
 import java.awt.Image;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
@@ -12,13 +13,15 @@ public abstract class AnimatedImageLabel extends JLabel{
 	
 	private static final long serialVersionUID = -6238097470939913778L;
 	private int currentImage;
-	private boolean interrupted;
+	private boolean interrupted, terminated;
 	private ImageIcon[] images;
 	
+	private ScheduledFuture<?> future;
 	
 	public AnimatedImageLabel(String resourcePrefix, int delay, int imageAmount, int width, int height, boolean preload){
 		this.currentImage = 0;
 		this.interrupted = false;
+		this.terminated = false;
 		if(preload){
 			images = new ImageIcon[imageAmount];
 			for(int i = 0; i < imageAmount; i++){
@@ -28,8 +31,8 @@ public abstract class AnimatedImageLabel extends JLabel{
 			this.setIcon(images[0]);
 		}
 		
-		GlobalVars.scheduler.schedule(() -> {
-			for(;;){
+		future = GlobalVars.scheduler.schedule(() -> {
+			while(!terminated){
 				while(!interrupted){
 					try{
 						ImageIcon next;
@@ -51,7 +54,9 @@ public abstract class AnimatedImageLabel extends JLabel{
 				}
 				try{
 					Thread.sleep(100);
-				}catch(InterruptedException interrupted){}
+				}catch(InterruptedException interrupted){
+					return;
+				}
 			}
 		}, 0, TimeUnit.MILLISECONDS);
 	}
@@ -60,4 +65,10 @@ public abstract class AnimatedImageLabel extends JLabel{
 		this.interrupted = interrupt;
 	}
 	
+	
+	public void terminate(){
+		this.setInterrupted(true);
+		this.terminated = true;
+		future.cancel(true);
+	}
 }

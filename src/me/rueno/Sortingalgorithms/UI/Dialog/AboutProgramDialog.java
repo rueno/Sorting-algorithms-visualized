@@ -50,7 +50,7 @@ public class AboutProgramDialog extends JDialog{
 		
 		JEditorPane dtrpnberDieseSoftware = new JEditorPane();
 		dtrpnberDieseSoftware.setContentType("text/html");
-		dtrpnberDieseSoftware.setText("<html>\r\n<h2 style=\"text-align:center;\">Über diese Software</h2>\r\n<p style=\"text-align:center;\">Rechtliches:</p>\r\n<p>Alle Icons dieser Software sind zu Verfügung gestellt von <a href=\"https://www.icons8.de/\">icons8.de</a>.</p>\r\n<p style=\"text-align:center;\">Abhängigkeiten</p>\r\n<ul>\r\n<li><a href=\"http://www.jfree.org/jfreechart/\">JCommon</a></li>\r\n<li><a href=\"http://www.jfree.org/jcommon/\">JFreeChart</a></li>\r\n</ul>\r\n</html>");
+		dtrpnberDieseSoftware.setText("<html>\r\n<h2 style=\"text-align:center;\">Über diese Software</h2>\r\n<p style=\"text-align:center;\">Rechtliches:</p>\r\n<p>Alle Icons dieser Software sind zu Verfügung gestellt von <a href=\"https://www.icons8.de/\">icons8.de</a>.</p>\r\n<p style=\"text-align:center;\">Abhängigkeiten</p>\r\n<ul>\r\n<li><a href=\"http://www.jfree.org/jcommon/\">JCommon</a></li>\r\n<li><a href=\"http://www.jfree.org/jfreechart/\">JFreeChart</a></li>\r\n</ul>\r\n</html>");
 		dtrpnberDieseSoftware.setEditable(false);
 		dtrpnberDieseSoftware.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		dtrpnberDieseSoftware.setHighlighter(null);

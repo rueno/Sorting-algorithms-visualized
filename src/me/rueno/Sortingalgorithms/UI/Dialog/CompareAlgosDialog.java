@@ -30,6 +30,8 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CompareAlgosDialog extends JDialog{
 	
@@ -42,6 +44,16 @@ public class CompareAlgosDialog extends JDialog{
 	private JButton btnCancel;
 	
 	public CompareAlgosDialog(JFrame parent, ISortingAlgorithm... algorithms){
+		addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e){
+				if(dataMaker != null && dataMaker.isAlive()){
+					dataMaker.interrupt();
+				}
+			}
+			
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CompareAlgosDialog.class.getResource("/resources/images/icons/iconDiagramm.png")));
 		this.algoColorMap = new HashMap<String, Color>();
 		

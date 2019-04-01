@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import me.rueno.Sortingalgorithms.Logic.ISortingAlgorithm;
+import me.rueno.Sortingalgorithms.UI.Components.AnimatedImageLabel;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -16,12 +17,24 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class AboutSortingAlgorithmDialog extends JDialog{
 	
 	private static final long serialVersionUID = 8754615513631930628L;
 	
+	private JLabel lblShortAni;
+	
 	public AboutSortingAlgorithmDialog(JFrame parent, ISortingAlgorithm algo){
+		addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent e){
+				if(lblShortAni instanceof AnimatedImageLabel){
+					((AnimatedImageLabel) lblShortAni).terminate();
+				}
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AboutSortingAlgorithmDialog.class.getResource("/resources/images/icons/iconInfo.png")));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Über den " + algo.getName());
@@ -66,8 +79,10 @@ public class AboutSortingAlgorithmDialog extends JDialog{
 		JLabel lblShort = new JLabel("Kurzzusammenfassung:");
 		panel.add(lblShort);
 		
-		if(algo.getGif() != null){
-			panel.add(algo.getGif());
+		lblShortAni = algo.getGif();
+		
+		if(lblShortAni != null){
+			panel.add(lblShortAni);
 		}else{
 			panel.add(new JLabel("Nicht angegeben!"));
 		}

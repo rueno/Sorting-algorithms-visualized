@@ -79,7 +79,6 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	private AnimatedImageLabel pikaRun;
 	private JTable table;
 	
-//	private Thread runtimeSort, visualizedSorter;
 	private ScheduledFuture<?> sorter, measure;
 	private JButton btnCancel;
 	
@@ -282,7 +281,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Sortierungsvorgang", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 172, 684, 394);
+		panel_1.setBounds(10, 171, 684, 394);
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -447,35 +446,16 @@ public class VisualizedSortingAlgorithm extends JFrame{
 			lblResaves.setText("0");
 			lblComparations.setText("0");
 			
-//			visualizedSorter = new InterruptableThread(() -> {
-//				algo.sortVisualized(list);
-//				if(!runtimeSort.isAlive()){
-//					setComponentsEnabled(true);
-//					pikaRun.setInterrupted(true);
-//				}
-//			});
-//			visualizedSorter.start();
-			
 			sorter = GlobalVars.scheduler.schedule(() -> {
 				try{
 					algo.sortVisualized(list);
-					System.out.println("Vis is done!");
 				}catch(InterruptedException ignore){}
 				if(measure.isDone()){
 					setComponentsEnabled(true);
 					pikaRun.setInterrupted(true);
 				}
-			}, 0, TimeUnit.MILLISECONDS); 
-//			runtimeSort = new InterruptableThread(() -> {
-//				Comparable[] array = generateListWithSelectedSettings(100000);
-//				long[] data = algo.measureAlgorithm(array);
-//				setStatistics(data[1], data[2], data[0]);
-//				if(!visualizedSorter.isAlive()){
-//					setComponentsEnabled(true);
-//					pikaRun.setInterrupted(true);
-//				}
-//			});
-//			runtimeSort.start();
+			}, 0, TimeUnit.MILLISECONDS);
+			
 			measure = GlobalVars.scheduler.schedule(() -> {
 				Comparable[] array = generateListWithSelectedSettings(10000);
 				long[] data = algo.measureAlgorithm(array);
