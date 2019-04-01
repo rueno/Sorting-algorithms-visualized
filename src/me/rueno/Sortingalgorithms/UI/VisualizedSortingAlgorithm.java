@@ -81,6 +81,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 	
 	private ScheduledFuture<?> sorter, measure;
 	private JButton btnCancel;
+	private JButton btnConfirm;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisualizedSortingAlgorithm(){
@@ -195,6 +196,9 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		cbListSortMethod.setModel(new DefaultComboBoxModel(ListType.values()));
 		cbListSortMethod.setSelectedIndex(0);
 		cbListSortMethod.setBounds(74, 18, 150, 20);
+		cbListSortMethod.addActionListener(a -> {
+			btnConfirm.doClick();
+		});
 		panelSettings.add(cbListSortMethod);
 		
 		JLabel lblTyp = new JLabel("Typ:");
@@ -206,6 +210,9 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		cbListContent.setModel(new DefaultComboBoxModel<>(new String[] {"Integer", "Long", "Float", "Double", "String"}));
 		cbListContent.setSelectedIndex(0);
 		cbListContent.setBounds(74, 43, 150, 20);
+		cbListContent.addActionListener(a -> {
+			btnConfirm.doClick();
+		});
 		panelSettings.add(cbListContent);
 		
 		JButton btnListTypeInfo = new JButton("?");
@@ -218,7 +225,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 					+ "Long: Ähnlich des Integers. Gleiche Zahlenrange. Kann theoretisch größere Zahlen annehmen, in dieser Software ist die Range jedoch beschränkt.\n"
 					+ "Float: Eine Kommazahl. In dieser Software mit maximal 2 Vorkomma und maximal 2 Nachkommastellen.\n"
 					+ "Double: Funktion in dieser Software ist gleich des Floats. \n"
-					+ "String: Eine Zeichenkette mit einer Länge von maximal 6 Zeichen, zufällig zusammengesetzt. Existiert um eine Besonderheit der java'schen Strings zu zeigen:\n"
+					+ "String: Eine Zeichenkette mit einer Länge von maximal 5 Zeichen, zufällig zusammengesetzt. Existiert um eine Besonderheit der java'schen Strings zu zeigen:\n"
 					+ "Strings werden sortiert, indem zuerst alle Großbuchstaben und danach alle Kleinbuchstaben sortiert in eine Reihe gebracht werden.");
 		});
 		panelSettings.add(btnListTypeInfo);
@@ -256,7 +263,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		});
 		panelSettings.add(btnCompareAll);
 		
-		JButton btnConfirm = new JButton("Generieren");
+		btnConfirm = new JButton("Neu generieren");
 		btnConfirm.setFocusPainted(false);
 		btnConfirm.setBounds(303, 42, 141, 23);
 		btnConfirm.addActionListener(action -> {
@@ -394,6 +401,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		pikaRun.setInterrupted(true);
 		
 		table = new JTable();
+		table.getTableHeader().setReorderingAllowed(false);
 		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel() {
@@ -409,11 +417,12 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.addColumn("Feldfarbe/Aktion");
 		model.addColumn("Bedeutung");
-		model.addRow(new String[] {" Grün",				" Feld ist an der korrekten Stelle in der Liste"});
+		model.addRow(new String[] {" Grün",				" Feld ist an der korrekten Stelle in der Liste*"});
 		model.addRow(new String[] {" Rot",				" Felder werden miteinander verglichen"});
 		model.addRow(new String[] {" Cyan",				" Felder werden vertauscht"});
 		model.addRow(new String[] {" Pikachu rennt",	" Es wird aktuell eine Liste sortiert"});
 		model.addRow(new String[] {" Pepe tanzt",		" Aus Meme"});
+		model.addRow(new String[] {" *",				" Nicht Bogosort und Quicksort"});
 		
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(92);
