@@ -171,6 +171,17 @@ public abstract class DefaultVisualizedSortingAlgorithm implements ISortingAlgor
 		return list[posX].compareTo(list[posY]);
 	}
 	
+	public final <C extends Comparable<C>> int compareVisualized(C[] list, int posX, C pivot, int speed) throws InterruptedException{
+		labels[posX].setBackground(Color.RED);
+		labels[indexOf(list, pivot)].setBackground(Color.RED);
+		sleepAppropiateAmountOfTimeForCompare();
+		labels[posX].setBackground(defaultBackground);
+		labels[indexOf(list, pivot)].setBackground(defaultBackground);
+		sleepAfterStep();
+		
+		return list[posX].compareTo(pivot);
+	}
+	
 	private void sleepAppropiateAmountOfTimeForCompare() throws InterruptedException{
 		Thread.sleep((long) (500 * (2 - GlobalVars.SPEED_MULTIPLIER)));
 	}

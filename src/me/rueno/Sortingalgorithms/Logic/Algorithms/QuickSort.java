@@ -30,8 +30,8 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 		
 		int i = start, j = end;
 		while(i <= j){
-			while(compareVisualized(list, i, indexOf(list, pivot), 4) < 0) i++;
-			while(compareVisualized(list, j, indexOf(list, pivot), 4) > 0) j--;
+			while(compareVisualized(list, i, pivot, 4) < 0) i++;
+			while(compareVisualized(list, j, pivot, 4) > 0) j--;
 			
 			if(i <= j){
 				swapVisualized(list, i, j, 4);
@@ -40,9 +40,21 @@ public class QuickSort extends DefaultVisualizedSortingAlgorithm{
 			}
 		}
 		
-		if(start < j) qSortVis(list, start, j);
-		if(end > i) qSortVis(list, i, end);
+		if(start < j){
+			qSortVis(list, start, j);
+		}
+		if(end > i){
+			qSortVis(list, i, end);
+		}
 		
+		markIntervallAsSorted(start, end);
+		
+	}
+	
+	private void markIntervallAsSorted(int start, int end) throws InterruptedException{
+		for(int k = start; k <= end; k++){
+			markAsSorted(k);
+		}
 	}
 	
 	@Override

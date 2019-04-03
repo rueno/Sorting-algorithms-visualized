@@ -422,7 +422,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		model.addRow(new String[] {" Cyan",				" Felder werden vertauscht"});
 		model.addRow(new String[] {" Pikachu rennt",	" Es wird aktuell eine Liste sortiert"});
 		model.addRow(new String[] {" Pepe tanzt",		" Aus Meme"});
-		model.addRow(new String[] {" *",				" Nicht Bogosort und Quicksort"});
+		model.addRow(new String[] {" *",				" Nicht Bogosort"});
 		
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(92);
