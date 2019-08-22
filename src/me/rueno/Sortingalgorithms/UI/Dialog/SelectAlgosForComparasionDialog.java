@@ -112,7 +112,7 @@ public class SelectAlgosForComparasionDialog extends JDialog{
 	private void addOrRemove(Class<? extends ISortingAlgorithm> c, boolean add){
 		try{
 			if(add){
-				resultAsList.add((ISortingAlgorithm) c.newInstance());
+				resultAsList.add((ISortingAlgorithm) c.getDeclaredConstructor().newInstance());
 			}else{
 				resultAsList.removeIf(type -> {
 					return (c.isInstance(type));

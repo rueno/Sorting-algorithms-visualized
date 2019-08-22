@@ -485,7 +485,7 @@ public class VisualizedSortingAlgorithm extends JFrame{
 		menuBar.add(menuFile);
 		
 		JMenuItem menuItemQuit = new JMenuItem("Beenden");
-		menuItemQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+		menuItemQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
 		menuItemQuit.addActionListener(a -> {
 			System.exit(0);
 		});
