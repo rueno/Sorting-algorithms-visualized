@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rueno/Sorting-algorithms-visualized.svg?branch=master)](https://travis-ci.org/rueno/Sorting-algorithms-visualized)
+
 # Sorting-algorithms-visualized
 A project, written in Java, which visualizes the compare and swap operations of simple sorting algorithms
 
