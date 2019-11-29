@@ -1,6 +1,6 @@
 language: java
 jdk: oraclejdk11
-script: build.sh
+script: ./build.sh
 deploy:
   provider: releases
   tag_name: "$TRAVIS_TAG"
