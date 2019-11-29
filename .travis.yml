@@ -1,0 +1,14 @@
+laguage: java
+jdk: oraclejdk11
+script:
+  - mvn clean install -DskipTests=true && cp target/*-0.0.1-SNAPSHOT-jar-with-dependencies.jar target/$PROJECT_DIR.jar
+deploy:
+  provider: releases
+  tag_name: "$TRAVIS_TAG"
+  name: "Sorting-algorithms-visualized $TRAVIS_TAG"
+  skip_cleanup: true
+  api_key:
+    secure: ""
+  on:
+    tags: true
+    repo: "rueno/Sorting-algorithms-visualized"
