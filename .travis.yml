@@ -1,10 +1,10 @@
-laguage: java
+language: java
 jdk: oraclejdk11
-script:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: build.sh
 deploy:
   provider: releases
   tag_name: "$TRAVIS_TAG"
+  file: "target/"
   name: "Sorting-algorithms-visualized $TRAVIS_TAG"
   skip_cleanup: true
   api_key:
