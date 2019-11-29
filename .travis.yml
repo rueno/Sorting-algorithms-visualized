@@ -1,5 +1,7 @@
 language: java
 jdk: oraclejdk11
+before_install:
+  - chmod +x build.sh
 script: ./build.sh
 deploy:
   provider: releases
