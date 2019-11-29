@@ -1,7 +1,7 @@
 laguage: java
 jdk: oraclejdk11
 script:
-  - mvn clean install -DskipTests=true && cp target/*-0.0.1-SNAPSHOT-jar-with-dependencies.jar target/$PROJECT_DIR.jar
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 deploy:
   provider: releases
   tag_name: "$TRAVIS_TAG"
