@@ -6,7 +6,7 @@ script: ./build.sh
 deploy:
   provider: releases
   tag_name: "$TRAVIS_TAG"
-  file: "target/Sorting-algorithms-visualized.jar"
+  file: "target/Sorting-algorithms-visualized-0.0.1.jar"
   name: "Sorting-algorithms-visualized $TRAVIS_TAG"
   skip_cleanup: true
   api_key:
