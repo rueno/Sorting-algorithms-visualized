@@ -4,7 +4,7 @@
   <artifactId>Sorting-algorithms-visualized</artifactId>
   <version>0.0.1</version>
   <build>
-    <finalName>Sorting-algorithms-visualized</finalName>
+    <finalName>target/Sorting-algorithms-visualized.jar</finalName>
     <sourceDirectory>src</sourceDirectory>
     <resources>
       <resource>
