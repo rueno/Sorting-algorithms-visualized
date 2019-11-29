@@ -21,6 +21,7 @@
 
 # Eclipse dirt #
 /.settings/
+/.metadata/
 /bin/
 .classpath
 .project
