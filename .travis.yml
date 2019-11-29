@@ -8,7 +8,7 @@ deploy:
   name: "Sorting-algorithms-visualized $TRAVIS_TAG"
   skip_cleanup: true
   api_key:
-    secure: ""
+    secure: "p30wcoAyIyYtU0JyMxsTuLN14w5gxgY3cn8w6MktsXENk0U2Khk6y+LZrdwqFnUs5C49WTGRkKvZhOE3ebJPjD418+ftCNrCv4sdfdeswLttHgVx25Zc/Bvv2jpwXMNCTEB9Ba4GaSR1zdJHnpIocxfIqHy3qaNVB1EDGEogdiwCdWjQLooeblto9Zrc5zUlBX/rFnMfP69DVTI1iFuMzVIY3+gMOPIsx5UP80FqWPc3bOSv89RusZxuykA2wLYwgkHKgxwQ8KUGPn0ruZlaWon6qN5tvjhvxKO+BUKiz5m2do0PoP//+8UQdENcmWxQuHr9kKm5/ZHmpg7gKzr9H3+4+Zpp9KwA1JCMSjSEIoDyGj1IgsgcnYS910Rs8Tr3rGBcLbPak0WsyhSpHAgW+CaZb6B3xJzBu0CD00rd6gubg6jXbpUs6fmVYLcJLRX2vnqNDY/UCXmFuNfNYfoXxfVRdp6YIFVizlE7bXMlS2yQ9ympDYVcNDY6tX1U7uYiuxpcRBh4E0PVGwUZewBSwVYfRK28LV6s40AsTIJmOgZ0yFKXluV/gZp4Y0hpwyuWjAGON/QIv81Cr058kkY5QvRdY+EMcqY5aY4GkbrcKOYhKzk7jqdqHb94deQS9S681bTBOZziEPrifjj7WGIUshW7gjqedoxH2/a3JJz7+qc="
   on:
     tags: true
     repo: "rueno/Sorting-algorithms-visualized"
